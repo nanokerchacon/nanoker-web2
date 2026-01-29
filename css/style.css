@@ -48,15 +48,19 @@ canvas {
 }
 
 .nav-logo {
-  font-size: 1.6rem;
-  font-weight: 800;
-  font-style: italic;
-  letter-spacing: -0.04em;
-  color: #fff;
+  display: flex;
+  align-items: center;
   text-decoration: none;
   position: relative;
   z-index: 2;
 }
+
+.nav-logo img {
+  height: 150px;      /* ajusta 28–36 si quieres */
+  width: auto;
+  display: block;
+}
+
 
 .nav-center {
   display: flex;
