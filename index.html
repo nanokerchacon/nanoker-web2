@@ -12,8 +12,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <!-- Cache-buster -->
+  <link rel="stylesheet" href="css/style.css?v=10" />
 
+  <!-- Importmap: OK en desktop; si Safari iOS no lo soporta, no pasa nada (menú sigue funcionando) -->
   <script type="importmap">
     {
       "imports": {
@@ -26,23 +28,26 @@
 
 <body>
   <nav class="nav" id="navbar">
-    <a href="#" class="nav-logo">
+    <a href="#" class="nav-logo" aria-label="Nanoker Home">
       <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
     </a>
 
+    <!-- CTA (en móvil va centrado por CSS) -->
+    <a href="#contact" class="nav-cta">Partner Access</a>
+
+    <!-- Botón hamburguesa (móvil) -->
     <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" type="button">
       ☰
       <span class="sr-only">Abrir menú</span>
     </button>
 
+    <!-- Menú (desktop centrado, móvil desplegable) -->
     <div class="nav-center" id="nav-menu">
       <span class="nav-label">Sectors:</span>
       <a href="#sec-quantum" class="nav-link">Quantum</a>
       <a href="#sec-semi" class="nav-link">Semiconductors</a>
       <a href="#sec-extreme" class="nav-link">Defense & Space</a>
     </div>
-
-    <a href="#contact" class="nav-cta">Partner Access</a>
   </nav>
 
   <header class="hero">
@@ -162,6 +167,31 @@
     </div>
   </footer>
 
-  <script type="module" src="./js/main.js"></script>
+  <!-- ✅ Menú móvil: script normal (FUNCIONA EN iPhone sí o sí) -->
+  <script>
+    (function () {
+      const nav = document.querySelector(".nav");
+      const btn = document.querySelector(".nav-toggle");
+      const links = document.querySelectorAll(".nav-center .nav-link");
+
+      if (!nav || !btn) return;
+
+      btn.addEventListener("click", function () {
+        const willOpen = !nav.classList.contains("is-open");
+        nav.classList.toggle("is-open", willOpen);
+        btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      });
+
+      links.forEach(function (link) {
+        link.addEventListener("click", function () {
+          nav.classList.remove("is-open");
+          btn.setAttribute("aria-expanded", "false");
+        });
+      });
+    })();
+  </script>
+
+  <!-- ✅ Three + scroll: module (si no funciona en iOS viejo, no rompe el menú) -->
+  <script type="module" src="./js/main.js?v=10"></script>
 </body>
 </html>
