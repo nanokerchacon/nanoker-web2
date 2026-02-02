@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nanoker | Advanced Deep Tech Materials</title>
 
-  <link rel="icon" type="image/svg+xml" href="./img/favicon-nanoker.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=7" />
 
   <script type="importmap">
     {
@@ -23,14 +24,18 @@
   </script>
 </head>
 
-
 <body>
   <nav class="nav" id="navbar">
     <a href="#" class="nav-logo">
-    <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
+      <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
     </a>
 
-    <div class="nav-center">
+    <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" type="button">
+      ☰
+      <span class="sr-only">Abrir menú</span>
+    </button>
+
+    <div class="nav-center" id="nav-menu">
       <span class="nav-label">Sectors:</span>
       <a href="#sec-quantum" class="nav-link">Quantum</a>
       <a href="#sec-semi" class="nav-link">Semiconductors</a>
