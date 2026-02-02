@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nanoker | Partner Access</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Cache-buster -->
+  <link rel="stylesheet" href="css/style.css?v=11" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body class="access-body">
+  <!-- Background -->
+  <div class="three-layer" id="threeLayer"></div>
+  <div class="screen-overlay"></div>
+
+  <!-- ✅ NAVBAR ORIGINAL (mismo que index, solo rutas ajustadas) -->
+  <nav class="nav" id="navbar">
+    <a href="./index.html" class="nav-logo" aria-label="Nanoker Home">
+      <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
+    </a>
+
+    <div class="nav-center" id="nav-menu">
+      <span class="nav-label">Sectors:</span>
+      <a href="./index.html#sec-quantum" class="nav-link">Quantum</a>
+      <a href="./index.html#sec-semi" class="nav-link">Semiconductors</a>
+      <a href="./index.html#sec-extreme" class="nav-link">Defense & Space</a>
+    </div>
+
+    <a href="./access.html" class="nav-cta" aria-current="page">Partner Access</a>
+  </nav>
+
+  <!-- ✅ MAIN -->
+  <main class="access-page">
+    <section class="access-panel" aria-label="Partner Access form">
+      <div class="access-accent"></div>
+
+      <div class="access-inner">
+        <div class="access-kicker">PRIVATE · PARTNER PORTAL</div>
+        <h1 class="access-title">Partner Access</h1>
+        <p class="access-subtitle">
+          Request access to the private materials portal. We review requests manually.
+        </p>
+
+        <form class="access-form" id="accessForm" autocomplete="on">
+          <div class="access-row">
+            <label class="access-field">
+              <span class="access-label">Name</span>
+              <input class="access-input" name="name" type="text" placeholder="Full name" required />
+            </label>
+
+            <label class="access-field">
+              <span class="access-label">Company</span>
+              <input class="access-input" name="company" type="text" placeholder="Company / Self-employed" required />
+            </label>
+          </div>
+
+          <label class="access-field">
+            <span class="access-label">Email</span>
+            <input class="access-input" name="email" type="email" placeholder="name@company.com" required />
+          </label>
+
+          <label class="access-field">
+            <span class="access-label">Request</span>
+            <textarea class="access-textarea" name="message" rows="4" placeholder="Materials / parts of interest"></textarea>
+          </label>
+
+          <button class="access-btn" type="submit">Request access</button>
+          <p class="access-note">Access requests are reviewed manually (24–48h business days).</p>
+
+          <div class="access-toast" id="toast" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initParticlesBackground } from "./js/three-particles.js";
+
+    initParticlesBackground({
+      mount: document.getElementById("threeLayer"),
+      count: 12000,
+      area: 80,
+      height: 22,
+      depth: 70,
+      baseSize: 0.055
+    });
+
+    // ✅ Centrado perfecto según altura real del navbar
+    const navbar = document.getElementById("navbar");
+    if (navbar) {
+      const setNavH = () => {
+        document.documentElement.style.setProperty("--nav-h", `${navbar.offsetHeight}px`);
+      };
+      setNavH();
+      window.addEventListener("resize", setNavH);
+    }
+
+    // ✅ Toast demo (luego lo conectamos a envío real)
+    const form = document.getElementById("accessForm");
+    const toast = document.getElementById("toast");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      toast.textContent = "Request sent ✅ We’ll contact you shortly.";
+      toast.classList.add("show");
+      form.reset();
+      setTimeout(() => toast.classList.remove("show"), 3200);
+    });
+  </script>
+</body>
+</html>

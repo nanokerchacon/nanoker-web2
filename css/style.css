@@ -168,7 +168,7 @@ canvas {
   }
 
   .nav-logo img{
-    height:80px;
+    height:100px;
   }
 
   /* CTA centrado en el header */
@@ -497,4 +497,195 @@ canvas {
     padding: 80px 20px;
     justify-content: center;
   }
+}
+
+/* =========================================================
+   PARTNER ACCESS (aislado para NO romper navbar)
+   Prefijo: access-
+========================================================= */
+
+:root{
+  --access-bg:#05070b;
+  --access-text:rgba(255,255,255,.92);
+  --access-cyan:#00ffdc;
+  --nav-h: 74px; /* se recalcula por JS */
+}
+
+.access-body{
+  background: var(--access-bg);
+  color: var(--access-text);
+  overflow-x: hidden;
+}
+
+/* Fondo three */
+.three-layer{
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.screen-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events:none;
+  background: radial-gradient(900px 600px at 50% 25%, rgba(0,255,220,.08), transparent 60%),
+              linear-gradient(to bottom, rgba(0,0,0,.42), rgba(0,0,0,.62));
+}
+
+/* Layout centrado debajo del navbar real */
+.access-page{
+  min-height: calc(100vh - var(--nav-h));
+  margin-top: var(--nav-h);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 24px;
+}
+
+/* Panel */
+.access-panel{
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.34);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 28px 120px rgba(0,0,0,.65);
+  overflow: hidden;
+}
+
+.access-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: .18;
+  pointer-events:none;
+}
+
+.access-accent{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width: 3px;
+  background: rgba(0,255,220,.95);
+  box-shadow: 0 0 28px rgba(0,255,220,.28);
+  pointer-events:none;
+}
+
+.access-inner{
+  position: relative;
+  z-index: 1;
+  padding: 42px 42px 34px;
+}
+
+.access-kicker{
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(0,255,220,.85);
+  margin-bottom: 16px;
+}
+
+.access-title{
+  margin:0;
+  font-size: 54px;
+  line-height: 1.02;
+  letter-spacing: -.02em;
+}
+
+.access-subtitle{
+  margin: 14px 0 28px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.5;
+}
+
+/* Form */
+.access-form{
+  display:grid;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.access-row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.access-field{ display:grid; gap: 8px; }
+
+.access-label{
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.62);
+}
+
+.access-input, .access-textarea{
+  border-radius: 4px;
+  padding: 12px 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.22);
+  color: rgba(255,255,255,.92);
+  outline:none;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.access-input:focus, .access-textarea:focus{
+  border-color: rgba(0,255,220,.55);
+  box-shadow: 0 0 0 3px rgba(0,255,220,.10);
+  transform: translateY(-1px);
+}
+
+.access-textarea{
+  resize: vertical;
+  min-height: 120px;
+}
+
+.access-btn{
+  height: 48px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,255,220,.55);
+  background: rgba(0,255,220,.16);
+  color: rgba(255,255,255,.92);
+  font-weight: 700;
+  cursor:pointer;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.access-btn:hover{
+  transform: translateY(-1px);
+  background: rgba(0,255,220,.22);
+  box-shadow: 0 0 28px rgba(0,255,220,.12);
+}
+
+.access-note{
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  line-height: 1.4;
+}
+
+.access-toast{
+  font-size: 13px;
+  color: rgba(255,255,255,.85);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.access-toast.show{ opacity: 1; transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 980px){
+  .access-inner{ padding: 34px 22px 26px; }
+  .access-title{ font-size: 42px; }
+  .access-row{ grid-template-columns: 1fr; }
 }
