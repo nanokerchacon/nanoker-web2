@@ -25,19 +25,22 @@ function updateStateByScroll() {
   const q = document.getElementById("sec-quantum");
   const s = document.getElementById("sec-semi");
   const e = document.getElementById("sec-extreme");
-  if (!q || !s || !e) return;
+  const m = document.getElementById("sec-medical"); // ✅ NUEVO
+  if (!q || !s || !e || !m) return;
 
   const secQuantum = q.offsetTop - viewportH * 0.5;
   const secSemi = s.offsetTop - viewportH * 0.5;
   const secExtreme = e.offsetTop - viewportH * 0.5;
+  const secMedical = m.offsetTop - viewportH * 0.5; // ✅ NUEVO
 
   if (scrollY < secQuantum) three.setTargetState("hero");
   else if (scrollY < secSemi) three.setTargetState("quantum");
   else if (scrollY < secExtreme) three.setTargetState("semi");
-  else three.setTargetState("extreme");
+  else if (scrollY < secMedical) three.setTargetState("extreme"); // ✅
+  else three.setTargetState("medical"); // ✅
 }
 
-window.addEventListener("scroll", updateStateByScroll);
+window.addEventListener("scroll", updateStateByScroll, { passive: true });
 updateStateByScroll();
 
 // IntersectionObserver para activar tarjetas

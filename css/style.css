@@ -7,6 +7,7 @@
   --c-q: #ff0055;
   --c-s: #00ffff;
   --c-e: #ffaa00;
+  --c-m: #35ff6a; /* ✅ Medical (verde) */
   --c-border: rgba(255, 255, 255, 0.15);
 }
 
@@ -343,6 +344,13 @@ canvas {
 .e-theme .card-tag, .e-theme b {
   color: var(--c-e);
   text-shadow: 0 0 20px rgba(255, 170, 0, 0.4);
+}
+
+/* ✅ NUEVO Theme Medical (verde) */
+.m-theme { border-left-color: var(--c-m); }
+.m-theme .card-tag, .m-theme b {
+  color: var(--c-m);
+  text-shadow: 0 0 20px rgba(53, 255, 106, 0.35);
 }
 
 /* Specs */
