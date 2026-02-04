@@ -8,6 +8,9 @@
   --c-s: #00ffff;
   --c-e: #ffaa00;
   --c-m: #35ff6a; /* ✅ Medical (verde) */
+  --c-v: #8b5cf6;
+  --c-v-glow: rgba(139, 92, 246, 0.35);
+  --c-v-glow-soft: rgba(139, 92, 246, 0.18);
   --c-border: rgba(255, 255, 255, 0.15);
 }
 
@@ -386,8 +389,8 @@ canvas {
 }
 
 .value-tag {
-  color: var(--c-s);
-  text-shadow: 0 0 20px rgba(0, 255, 255, 0.35);
+  color: var(--c-v);
+  text-shadow: 0 0 20px var(--c-v-glow);
 }
 
 .value-content h2 {
@@ -396,7 +399,7 @@ canvas {
 }
 
 .value-content h2 b {
-  color: var(--c-s);
+  color: var(--c-v);
 }
 
 .value-content p {
@@ -415,7 +418,7 @@ canvas {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(12px);
   border: 1px solid var(--c-border);
-  border-left: 4px solid var(--c-s);
+  border-left: 4px solid var(--c-v);
   padding: 26px 24px 28px;
   min-height: 220px;
   opacity: 0;
@@ -425,8 +428,8 @@ canvas {
 
 .value-card:hover {
   transform: translateY(-6px);
-  border-left-color: #fff;
-  box-shadow: 0 18px 40px rgba(0, 255, 255, 0.1);
+  border-left-color: var(--c-v);
+  box-shadow: 0 18px 40px var(--c-v-glow-soft);
 }
 
 .section.active .value-card {

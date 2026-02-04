@@ -55,8 +55,8 @@ export function initThreeBackground() {
       medical: 0.0,
     },
     value: {
-      color: new THREE.Color(0x00121a),
-      emissive: new THREE.Color(0x00bcd4),
+      color: new THREE.Color(0x150b22),
+      emissive: new THREE.Color(0x8b5cf6),
       roughness: 0.18,
       metalness: 0.75,
       waveType: 1,
