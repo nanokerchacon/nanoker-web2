@@ -97,7 +97,7 @@ export function initThreeBackground() {
 
   // --- SETUP ---
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x020202);
+  scene.background = null;
   scene.fog = new THREE.FogExp2(0x020202, 0.01);
 
   const camera = new THREE.PerspectiveCamera(
@@ -109,6 +109,7 @@ export function initThreeBackground() {
   camera.position.set(0, 25, 50);
 
   const renderer = new THREE.WebGLRenderer({
+    alpha: true,
     antialias: false,
     powerPreference: "high-performance",
     stencil: true, // ✅ para recortar por stencil
