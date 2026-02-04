@@ -112,14 +112,27 @@ export function initThreeBackground() {
     alpha: true,
     antialias: false,
     powerPreference: "high-performance",
-    stencil: true, // ✅ para recortar por stencil
+    stencil: true,
   });
 
+  // ✅ CLAVE: transparencia real
+  renderer.setClearColor(0x000000, 0);
+
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-  document.body.appendChild(renderer.domElement);
+  // ✅ Canvas fixed + class (NO depender de canvas global)
+  const canvas = renderer.domElement;
+  canvas.classList.add("three-bg-canvas");
+  canvas.style.position = "fixed";
+  canvas.style.inset = "0";
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.pointerEvents = "none";
+  canvas.style.display = "block";
+  // z-index lo pone el CSS (.three-bg-canvas { z-index:-1 })
+  document.body.appendChild(canvas);
 
   // --- LUCES ---
   scene.add(new THREE.AmbientLight(0xffffff, 2.0));
@@ -128,7 +141,7 @@ export function initThreeBackground() {
   scene.add(mainLight);
 
   // =========================================================
-  // GRID (MALLA ORIGINAL) — INTACTO
+  // GRID (MALLA ORIGINAL)
   // =========================================================
   const geometry = new THREE.TetrahedronGeometry(0.15, 0);
   geometry.scale(1, 5, 1);
@@ -276,10 +289,7 @@ export function initThreeBackground() {
 
   const valueLineGeo = new THREE.BufferGeometry();
   const linePositions = new Float32Array(valueConnections.length * 2 * 3);
-  valueLineGeo.setAttribute(
-    "position",
-    new THREE.BufferAttribute(linePositions, 3)
-  );
+  valueLineGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
 
   const valueLineMat = new THREE.LineBasicMaterial({
     color: 0x8b5cf6,
@@ -294,7 +304,7 @@ export function initThreeBackground() {
   valueBackdrop.add(valueLines);
 
   // =========================================================
-  // MEDICAL GROUP
+  // MEDICAL GROUP + STENCIL + FX (tu código original)
   // =========================================================
   const medicalGroup = new THREE.Group();
   medicalGroup.frustumCulled = false;
@@ -449,7 +459,7 @@ export function initThreeBackground() {
       x: (Math.random() - 0.5) * areaX,
       y: (Math.random() - 0.5) * areaY + 14,
       z,
-      s: sizeBase, // ✅ sin escalado por profundidad
+      s: sizeBase,
       a: Math.random() * Math.PI * 2,
       sp: 0.35 + Math.random() * 1.05,
       depth01,
@@ -459,14 +469,8 @@ export function initThreeBackground() {
     bubbleDepth[i] = depth01;
   }
 
-  bubbles.geometry.setAttribute(
-    "aSeed",
-    new THREE.InstancedBufferAttribute(bubbleSeeds, 1)
-  );
-  bubbles.geometry.setAttribute(
-    "aDepth",
-    new THREE.InstancedBufferAttribute(bubbleDepth, 1)
-  );
+  bubbles.geometry.setAttribute("aSeed", new THREE.InstancedBufferAttribute(bubbleSeeds, 1));
+  bubbles.geometry.setAttribute("aDepth", new THREE.InstancedBufferAttribute(bubbleDepth, 1));
 
   // Dust microscópico
   const DUST = 2600;
@@ -502,9 +506,7 @@ export function initThreeBackground() {
   dustPts.frustumCulled = false;
   medicalGroup.add(dustPts);
 
-  // =========================================================
-  // STENCIL MASK: marca el área del card
-  // =========================================================
+  // STENCIL MASK
   const maskScene = new THREE.Scene();
   const maskCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
   maskCam.position.z = 1;
@@ -546,9 +548,7 @@ export function initThreeBackground() {
     return true;
   }
 
-  // =========================================================
   // POST-PROCESSING
-  // =========================================================
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
 
@@ -563,16 +563,12 @@ export function initThreeBackground() {
   bloomPass.radius = 0.8;
   composer.addPass(bloomPass);
 
-  // =========================================================
   // SCREEN FX (solo Medical)
-  // =========================================================
   const fxUniforms = {
     uTime: { value: 0 },
     uIntensity: { value: 0 },
     uTint: { value: new THREE.Color(0x35ff6a) },
-    uResolution: {
-      value: new THREE.Vector2(window.innerWidth, window.innerHeight),
-    },
+    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
   };
 
   const fxMat = new THREE.ShaderMaterial({
@@ -646,7 +642,7 @@ export function initThreeBackground() {
   const fxCam = new THREE.Camera();
   fxScene.add(fxMesh);
 
-  // --- INPUT ---
+  // INPUT
   const clock = new THREE.Clock();
   const damp = (lambda, dt) => 1 - Math.exp(-lambda * dt);
   let lastT = 0;
@@ -662,12 +658,12 @@ export function initThreeBackground() {
   };
   window.addEventListener("mousemove", onMouseMove, { passive: true });
 
-  // --- API ---
+  // API
   function setTargetState(name) {
     target = STATES[name] ?? STATES.hero;
   }
 
-  // ---------- ANTI-PETADAS ----------
+  // ANTI-PETADAS
   let rafId = 0;
   let running = true;
   let contextLost = false;
@@ -677,7 +673,7 @@ export function initThreeBackground() {
     camera.updateProjectionMatrix();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
 
     composer.setSize(window.innerWidth, window.innerHeight);
     bloomPass.setSize(window.innerWidth, window.innerHeight);
@@ -698,8 +694,6 @@ export function initThreeBackground() {
     if (rafId) cancelAnimationFrame(rafId);
     rafId = 0;
   }
-
-  const canvas = renderer.domElement;
 
   const onContextLost = (e) => {
     e.preventDefault();
@@ -733,7 +727,7 @@ export function initThreeBackground() {
   };
   window.addEventListener("focus", onFocus);
 
-  // --- LOOP ---
+  // LOOP
   function animate() {
     if (!running || contextLost) return;
     rafId = requestAnimationFrame(animate);
@@ -772,7 +766,6 @@ export function initThreeBackground() {
     raycaster.ray.intersectPlane(plane, intersect);
     if (intersect) targetPos.lerp(intersect, lerpMouse);
 
-    // ✅ cámara fija
     camera.position.set(0, 25, 50);
     camera.lookAt(0, 0, 0);
 
@@ -792,18 +785,14 @@ export function initThreeBackground() {
     material.roughness = current.roughness;
     material.metalness = current.metalness;
 
-    // 1) stencil mask del card (solo medical)
     if (inMedical) {
       renderer.clearStencil();
       renderer.state.buffers.stencil.setTest(true);
 
       const medicalCardEl = document.querySelector("#sec-medical .card");
       const hasMask = setMaskFromElement(medicalCardEl);
-      if (hasMask) {
-        renderer.render(maskScene, maskCam);
-      } else {
-        renderer.state.buffers.stencil.setTest(false);
-      }
+      if (hasMask) renderer.render(maskScene, maskCam);
+      else renderer.state.buffers.stencil.setTest(false);
     } else {
       renderer.state.buffers.stencil.setTest(false);
     }
@@ -919,8 +908,6 @@ export function initThreeBackground() {
     medicalGroup.visible = m > 0.001;
 
     if (medicalGroup.visible) {
-      medicalGroup.position.set(0, 0, 0);
-
       bubbleUniforms.uTime.value = t;
       bubbleUniforms.uTint.value.copy(current.emissive);
       bubbleUniforms.uOpacity.value = 0.85 * m;
@@ -948,7 +935,6 @@ export function initThreeBackground() {
         bubbleDummy.position.set(x, y, b.z);
         bubbleDummy.quaternion.copy(camera.quaternion);
 
-        // ✅ tamaño PERFECTO fijo en pantalla (solo Z, cero jitter)
         const refDistZ = 75;
         const distZ = Math.abs(camera.position.z - b.z);
         bubbleDummy.scale.setScalar(b.s * (distZ / refDistZ));
@@ -978,7 +964,6 @@ export function initThreeBackground() {
       dustGeo.attributes.position.needsUpdate = true;
     }
 
-    // overlay scanlines (medical)
     fxUniforms.uTime.value = t;
     fxUniforms.uIntensity.value = m;
     fxUniforms.uTint.value.copy(current.emissive);
@@ -994,15 +979,12 @@ export function initThreeBackground() {
     renderer.state.buffers.stencil.setTest(false);
   }
 
-  // Resize
   const onResize = () => forceResize();
   window.addEventListener("resize", onResize, { passive: true });
 
-  // Arranque
   clock.start();
   rafId = requestAnimationFrame(animate);
 
-  // Limpieza
   function dispose() {
     stopLoop();
 
@@ -1041,20 +1023,17 @@ export function initThreeBackground() {
 
     renderer.dispose();
 
-    if (renderer.domElement?.parentNode) {
-      renderer.domElement.parentNode.removeChild(renderer.domElement);
-    }
+    if (canvas?.parentNode) canvas.parentNode.removeChild(canvas);
   }
 
   return { setTargetState, dispose };
 
-  // helpers internas
   function forceResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
 
     composer.setSize(window.innerWidth, window.innerHeight);
     bloomPass.setSize(window.innerWidth, window.innerHeight);

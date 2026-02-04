@@ -12,7 +12,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <!-- Cache-buster -->
   <link rel="stylesheet" href="css/style.css?v=11" />
 
   <script type="importmap">
@@ -30,7 +29,6 @@
   <div class="three-layer" id="threeLayer"></div>
   <div class="screen-overlay"></div>
 
-  <!-- ✅ NAVBAR ORIGINAL (mismo que index, solo rutas ajustadas) -->
   <nav class="nav" id="navbar">
     <a href="./index.html" class="nav-logo" aria-label="Nanoker Home">
       <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
@@ -47,7 +45,6 @@
     <a href="./access.html" class="nav-cta" aria-current="page">Partner Access</a>
   </nav>
 
-  <!-- ✅ MAIN -->
   <main class="access-page">
     <section class="access-panel" aria-label="Partner Access form">
       <div class="access-accent"></div>
@@ -94,8 +91,10 @@
   <script type="module">
     import { initParticlesBackground } from "./js/three-particles.js";
 
+    const threeLayer = document.getElementById("threeLayer");
+
     initParticlesBackground({
-      mount: document.getElementById("threeLayer"),
+      mount: threeLayer,
       count: 12000,
       area: 80,
       height: 22,
@@ -103,7 +102,7 @@
       baseSize: 0.055
     });
 
-    // ✅ Centrado perfecto según altura real del navbar
+    // Centrado perfecto según altura real del navbar
     const navbar = document.getElementById("navbar");
     if (navbar) {
       const setNavH = () => {
@@ -113,7 +112,7 @@
       window.addEventListener("resize", setNavH);
     }
 
-    // ✅ Toast demo (luego lo conectamos a envío real)
+    // Toast demo
     const form = document.getElementById("accessForm");
     const toast = document.getElementById("toast");
 

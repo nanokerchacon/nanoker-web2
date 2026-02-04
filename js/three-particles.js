@@ -8,7 +8,8 @@ export function initParticlesBackground({
   depth = 70,
   baseSize = 0.055,
 } = {}) {
-  const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  const reduceMotion =
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
 
   const scene = new THREE.Scene();
 
@@ -25,14 +26,18 @@ export function initParticlesBackground({
     alpha: true,
     powerPreference: "high-performance",
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  renderer.setClearColor(0x000000, 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // canvas full-screen dentro del mount
+  renderer.domElement.classList.add("particles-canvas");
   renderer.domElement.style.width = "100%";
   renderer.domElement.style.height = "100%";
   renderer.domElement.style.display = "block";
   renderer.domElement.style.pointerEvents = "none";
+
   mount.appendChild(renderer.domElement);
 
   const geo = new THREE.BufferGeometry();
@@ -49,12 +54,12 @@ export function initParticlesBackground({
   for (let i = 0; i < count; i++) {
     const i3 = i * 3;
 
-    positions[i3]     = rand(-area / 2, area / 2);
+    positions[i3] = rand(-area / 2, area / 2);
     positions[i3 + 1] = rand(-height / 2, height / 2);
     positions[i3 + 2] = rand(-depth / 2, depth / 2);
 
     // drift muy lento (microgravedad)
-    velocities[i3]     = rand(-0.006, 0.006);
+    velocities[i3] = rand(-0.006, 0.006);
     velocities[i3 + 1] = rand(-0.004, 0.004);
     velocities[i3 + 2] = rand(-0.006, 0.006);
 
@@ -93,22 +98,21 @@ export function initParticlesBackground({
     if (!reduceMotion) {
       t += 0.006;
 
-      // vida global mínima
       points.rotation.y += 0.00035;
       points.rotation.x = Math.sin(t * 0.25) * 0.01;
 
       const pos = geo.attributes.position.array;
       const vel = geo.attributes.velocity.array;
-      const ph  = geo.attributes.phase.array;
-      const w   = geo.attributes.weight.array;
+      const ph = geo.attributes.phase.array;
+      const w = geo.attributes.weight.array;
 
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
 
         const breathe = Math.sin(t + ph[i]) * 0.0009 * w[i];
 
-        pos[i3]     += vel[i3]     * w[i];
-        pos[i3 + 1] += (vel[i3 + 1] * w[i]) + breathe;
+        pos[i3] += vel[i3] * w[i];
+        pos[i3 + 1] += vel[i3 + 1] * w[i] + breathe;
         pos[i3 + 2] += vel[i3 + 2] * w[i];
 
         // rebote suave
@@ -124,11 +128,10 @@ export function initParticlesBackground({
   }
 
   function onResize() {
-    // el mount es full-screen, pero el renderer necesita el tamaño de la ventana
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   }
 
   window.addEventListener("resize", onResize);

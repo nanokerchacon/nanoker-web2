@@ -26,22 +26,23 @@ function updateStateByScroll() {
   const q = document.getElementById("sec-quantum");
   const s = document.getElementById("sec-semi");
   const e = document.getElementById("sec-extreme");
-  const m = document.getElementById("sec-medical"); // ✅ NUEVO
+  const m = document.getElementById("sec-medical");
   const v = document.getElementById("sec-value");
   if (!q || !s || !e || !m || !v) return;
 
   const triggerPoint = (el) => el.offsetTop - viewportH * 0.45;
+
   const secQuantum = triggerPoint(q);
   const secSemi = triggerPoint(s);
   const secExtreme = triggerPoint(e);
-  const secMedical = triggerPoint(m); // ✅ NUEVO
+  const secMedical = triggerPoint(m);
   const secValue = triggerPoint(v);
 
   if (scrollY < secQuantum) three.setTargetState("hero");
   else if (scrollY < secSemi) three.setTargetState("quantum");
   else if (scrollY < secExtreme) three.setTargetState("semi");
-  else if (scrollY < secMedical) three.setTargetState("extreme"); // ✅
-  else if (scrollY < secValue) three.setTargetState("medical"); // ✅
+  else if (scrollY < secMedical) three.setTargetState("extreme");
+  else if (scrollY < secValue) three.setTargetState("medical");
   else three.setTargetState("value");
 }
 
