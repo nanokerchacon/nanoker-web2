@@ -375,6 +375,93 @@ canvas {
   color: #fff;
 }
 
+/* --- WHY NANOKER --- */
+.value-section {
+  justify-content: center;
+}
+
+.value-content {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.value-tag {
+  color: var(--c-s);
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.35);
+}
+
+.value-content h2 {
+  font-size: clamp(2.8rem, 4vw, 3.6rem);
+  margin-bottom: 24px;
+}
+
+.value-content h2 b {
+  color: var(--c-s);
+}
+
+.value-content p {
+  max-width: 720px;
+  margin-bottom: 40px;
+  color: #cfcfcf;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.value-card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-s);
+  padding: 26px 24px 28px;
+  min-height: 220px;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-6px);
+  border-left-color: #fff;
+  box-shadow: 0 18px 40px rgba(0, 255, 255, 0.1);
+}
+
+.section.active .value-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section.active .value-card:nth-child(1) { transition-delay: 0.05s; }
+.section.active .value-card:nth-child(2) { transition-delay: 0.1s; }
+.section.active .value-card:nth-child(3) { transition-delay: 0.15s; }
+.section.active .value-card:nth-child(4) { transition-delay: 0.2s; }
+
+.value-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.value-card h3 {
+  margin: 0 0 14px;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.value-card p {
+  margin: 0;
+  color: #c7c7c7;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
 /* --- FOOTER --- */
 .footer {
   background: radial-gradient(circle at 50% 0%, #111111 0%, #020202 50%);
@@ -497,6 +584,9 @@ canvas {
     gap: 20px;
     text-align: center;
   }
+  .value-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -504,6 +594,12 @@ canvas {
   .section {
     padding: 80px 20px;
     justify-content: center;
+  }
+  .value-grid {
+    grid-template-columns: 1fr;
+  }
+  .value-card {
+    min-height: auto;
   }
 }
 

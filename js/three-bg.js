@@ -54,6 +54,18 @@ export function initThreeBackground() {
       particles: 0.2,
       medical: 0.0,
     },
+    value: {
+      color: new THREE.Color(0x00121a),
+      emissive: new THREE.Color(0x00bcd4),
+      roughness: 0.18,
+      metalness: 0.75,
+      waveType: 1,
+      freq: 1.1,
+      amp: 0.6,
+      bloom: 0.64,
+      particles: 0.25,
+      medical: 0.0,
+    },
     medical: {
       color: new THREE.Color(0x001408),
       emissive: new THREE.Color(0x35ff6a),
@@ -669,13 +681,21 @@ export function initThreeBackground() {
     material.roughness = current.roughness;
     material.metalness = current.metalness;
 
-    // 1) stencil mask del card
-    renderer.clearStencil();
-    renderer.state.buffers.stencil.setTest(true);
+    // 1) stencil mask del card (solo medical)
+    if (inMedical) {
+      renderer.clearStencil();
+      renderer.state.buffers.stencil.setTest(true);
 
-    const medicalCardEl = document.querySelector("#sec-medical .card");
-    const hasMask = setMaskFromElement(medicalCardEl);
-    if (hasMask) renderer.render(maskScene, maskCam);
+      const medicalCardEl = document.querySelector("#sec-medical .card");
+      const hasMask = setMaskFromElement(medicalCardEl);
+      if (hasMask) {
+        renderer.render(maskScene, maskCam);
+      } else {
+        renderer.state.buffers.stencil.setTest(false);
+      }
+    } else {
+      renderer.state.buffers.stencil.setTest(false);
+    }
 
     // grid update
     if (gridMesh.visible) {

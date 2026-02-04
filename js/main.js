@@ -26,18 +26,21 @@ function updateStateByScroll() {
   const s = document.getElementById("sec-semi");
   const e = document.getElementById("sec-extreme");
   const m = document.getElementById("sec-medical"); // ✅ NUEVO
-  if (!q || !s || !e || !m) return;
+  const v = document.getElementById("sec-value");
+  if (!q || !s || !e || !m || !v) return;
 
   const secQuantum = q.offsetTop - viewportH * 0.5;
   const secSemi = s.offsetTop - viewportH * 0.5;
   const secExtreme = e.offsetTop - viewportH * 0.5;
   const secMedical = m.offsetTop - viewportH * 0.5; // ✅ NUEVO
+  const secValue = v.offsetTop - viewportH * 0.5;
 
   if (scrollY < secQuantum) three.setTargetState("hero");
   else if (scrollY < secSemi) three.setTargetState("quantum");
   else if (scrollY < secExtreme) three.setTargetState("semi");
   else if (scrollY < secMedical) three.setTargetState("extreme"); // ✅
-  else three.setTargetState("medical"); // ✅
+  else if (scrollY < secValue) three.setTargetState("medical"); // ✅
+  else three.setTargetState("value");
 }
 
 window.addEventListener("scroll", updateStateByScroll, { passive: true });
