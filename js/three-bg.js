@@ -283,7 +283,7 @@ export function initThreeBackground() {
   const valueLineMat = new THREE.LineBasicMaterial({
     color: 0x8b5cf6,
     transparent: true,
-    opacity: 0.08,
+    opacity: 0.12,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   });
