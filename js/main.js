@@ -6,6 +6,7 @@ try {
   three = initThreeBackground();
 } catch (e) {
   console.warn("Three no pudo inicializarse en este dispositivo:", e);
+  document.body.classList.add("no-three");
 }
 
 // --- SCROLL STATE ---
