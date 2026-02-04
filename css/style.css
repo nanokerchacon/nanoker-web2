@@ -422,30 +422,38 @@ canvas {
   padding: 26px 24px 28px;
   min-height: 220px;
   opacity: 0;
-  transform: translateX(-18px);
-  transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transform: translateX(-32px) scale(0.98);
+  filter: blur(6px);
+  transition:
+    transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.9s ease,
+    filter 0.9s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .value-card:hover {
-  transform: translateY(-6px);
+  transform: translateX(0) translateY(-6px);
   border-left-color: var(--c-v);
   box-shadow: 0 18px 40px var(--c-v-glow-soft);
 }
 
 .section.active .value-card {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(0) scale(1);
+  filter: blur(0);
 }
 
-.section.active .value-card:nth-child(1) { transition-delay: 0s; }
-.section.active .value-card:nth-child(2) { transition-delay: 0.1s; }
-.section.active .value-card:nth-child(3) { transition-delay: 0.2s; }
-.section.active .value-card:nth-child(4) { transition-delay: 0.3s; }
+.section.active .value-card:nth-child(1) { transition-delay: 0.15s; }
+.section.active .value-card:nth-child(2) { transition-delay: 0.4s; }
+.section.active .value-card:nth-child(3) { transition-delay: 0.65s; }
+.section.active .value-card:nth-child(4) { transition-delay: 0.9s; }
 
 @media (prefers-reduced-motion: reduce) {
   .value-card {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 }
