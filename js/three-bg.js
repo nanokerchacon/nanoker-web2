@@ -98,7 +98,7 @@ export function initThreeBackground() {
   // --- SETUP ---
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x020202);
-  scene.fog = new THREE.FogExp2(0x020202, 0.02);
+  scene.fog = new THREE.FogExp2(0x020202, 0.01);
 
   const camera = new THREE.PerspectiveCamera(
     45,
@@ -214,7 +214,7 @@ export function initThreeBackground() {
 
   const valueRangeX = 78;
   const valueRangeY = 32;
-  const valueRangeZ = 120;
+  const valueRangeZ = 80;
 
   for (let i = 0; i < VALUE_NODES; i++) {
     const ix = i * 3;
@@ -237,10 +237,10 @@ export function initThreeBackground() {
 
   const valueMat = new THREE.PointsMaterial({
     color: 0x8b5cf6,
-    size: 0.07,
+    size: 0.085,
     sizeAttenuation: true,
     transparent: true,
-    opacity: 0.1,
+    opacity: 0.14,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   });
@@ -984,9 +984,11 @@ export function initThreeBackground() {
 
     composer.render();
 
-    renderer.autoClear = false;
-    renderer.render(fxScene, fxCam);
-    renderer.autoClear = true;
+    if (inMedical) {
+      renderer.autoClear = false;
+      renderer.render(fxScene, fxCam);
+      renderer.autoClear = true;
+    }
 
     renderer.state.buffers.stencil.setTest(false);
   }
