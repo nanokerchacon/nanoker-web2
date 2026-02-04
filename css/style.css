@@ -39,9 +39,8 @@ body::before {
 canvas {
   display: block;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+  inset: 0;
+  z-index: -3;
 }
 
 /* Accesibilidad */
