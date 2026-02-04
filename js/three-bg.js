@@ -17,6 +17,8 @@ export function initThreeBackground() {
       bloom: 0.55,
       particles: 0.1,
       medical: 0.0,
+      noGrid: 0.0,
+      showValueBackdrop: 0.0,
     },
     quantum: {
       color: new THREE.Color(0x220011),
@@ -29,6 +31,8 @@ export function initThreeBackground() {
       bloom: 0.6,
       particles: 0.18,
       medical: 0.0,
+      noGrid: 0.0,
+      showValueBackdrop: 0.0,
     },
     semi: {
       color: new THREE.Color(0x001133),
@@ -41,6 +45,8 @@ export function initThreeBackground() {
       bloom: 0.62,
       particles: 0.22,
       medical: 0.0,
+      noGrid: 0.0,
+      showValueBackdrop: 0.0,
     },
     extreme: {
       color: new THREE.Color(0x221100),
@@ -53,6 +59,8 @@ export function initThreeBackground() {
       bloom: 0.58,
       particles: 0.2,
       medical: 0.0,
+      noGrid: 0.0,
+      showValueBackdrop: 0.0,
     },
     value: {
       color: new THREE.Color(0x150b22),
@@ -65,6 +73,8 @@ export function initThreeBackground() {
       bloom: 0.64,
       particles: 0.25,
       medical: 0.0,
+      noGrid: 1.0,
+      showValueBackdrop: 1.0,
     },
     medical: {
       color: new THREE.Color(0x001408),
@@ -77,6 +87,8 @@ export function initThreeBackground() {
       bloom: 0.85,
       particles: 0.85,
       medical: 1.0,
+      noGrid: 1.0,
+      showValueBackdrop: 0.0,
     },
   };
 
@@ -185,6 +197,100 @@ export function initThreeBackground() {
   const particles = new THREE.Points(pGeo, pMat);
   particles.frustumCulled = false;
   scene.add(particles);
+
+  // =========================================================
+  // VALUE BACKDROP (NETWORK)
+  // =========================================================
+  const valueBackdrop = new THREE.Group();
+  valueBackdrop.frustumCulled = false;
+  valueBackdrop.visible = false;
+  scene.add(valueBackdrop);
+
+  const VALUE_NODES = 170;
+  const valueGeo = new THREE.BufferGeometry();
+  const valueBasePos = new Float32Array(VALUE_NODES * 3);
+  const valuePos = new Float32Array(VALUE_NODES * 3);
+  const valueSeeds = new Float32Array(VALUE_NODES);
+
+  const valueRangeX = 78;
+  const valueRangeY = 32;
+  const valueRangeZ = 120;
+
+  for (let i = 0; i < VALUE_NODES; i++) {
+    const ix = i * 3;
+    const x = (Math.random() - 0.5) * valueRangeX;
+    const y = Math.random() * valueRangeY + 6;
+    const z = (Math.random() - 0.5) * valueRangeZ;
+
+    valueBasePos[ix + 0] = x;
+    valueBasePos[ix + 1] = y;
+    valueBasePos[ix + 2] = z;
+
+    valuePos[ix + 0] = x;
+    valuePos[ix + 1] = y;
+    valuePos[ix + 2] = z;
+
+    valueSeeds[i] = Math.random() * Math.PI * 2;
+  }
+
+  valueGeo.setAttribute("position", new THREE.BufferAttribute(valuePos, 3));
+
+  const valueMat = new THREE.PointsMaterial({
+    color: 0x8b5cf6,
+    size: 0.07,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: 0.1,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const valuePoints = new THREE.Points(valueGeo, valueMat);
+  valuePoints.frustumCulled = false;
+  valueBackdrop.add(valuePoints);
+
+  const valueConnections = [];
+  const maxConnectionsPerNode = 2;
+  const maxDistance = 18;
+  const attemptsPerNode = 5;
+
+  for (let i = 0; i < VALUE_NODES; i++) {
+    let connectionsForNode = 0;
+    for (let attempt = 0; attempt < attemptsPerNode; attempt++) {
+      if (connectionsForNode >= maxConnectionsPerNode) break;
+      const j = Math.floor(Math.random() * VALUE_NODES);
+      if (i === j) continue;
+      const ix = i * 3;
+      const jx = j * 3;
+      const dx = valueBasePos[ix] - valueBasePos[jx];
+      const dy = valueBasePos[ix + 1] - valueBasePos[jx + 1];
+      const dz = valueBasePos[ix + 2] - valueBasePos[jx + 2];
+      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+      if (dist <= maxDistance) {
+        valueConnections.push([i, j]);
+        connectionsForNode++;
+      }
+    }
+  }
+
+  const valueLineGeo = new THREE.BufferGeometry();
+  const linePositions = new Float32Array(valueConnections.length * 2 * 3);
+  valueLineGeo.setAttribute(
+    "position",
+    new THREE.BufferAttribute(linePositions, 3)
+  );
+
+  const valueLineMat = new THREE.LineBasicMaterial({
+    color: 0x8b5cf6,
+    transparent: true,
+    opacity: 0.08,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const valueLines = new THREE.LineSegments(valueLineGeo, valueLineMat);
+  valueLines.frustumCulled = false;
+  valueBackdrop.add(valueLines);
 
   // =========================================================
   // MEDICAL GROUP
@@ -654,6 +760,9 @@ export function initThreeBackground() {
     current.bloom += (target.bloom - current.bloom) * lerpState;
     current.particles += (target.particles - current.particles) * lerpState;
     current.medical += (target.medical - current.medical) * lerpState;
+    current.noGrid += (target.noGrid - current.noGrid) * lerpState;
+    current.showValueBackdrop +=
+      (target.showValueBackdrop - current.showValueBackdrop) * lerpState;
 
     const m = THREE.MathUtils.smoothstep(current.medical, 0.05, 0.35);
 
@@ -674,7 +783,8 @@ export function initThreeBackground() {
     pMat.opacity = 0.05 + current.particles * 0.20;
 
     const inMedical = m > 0.02;
-    gridMesh.visible = !inMedical;
+    gridMesh.visible = !(current.noGrid > 0.5);
+    valueBackdrop.visible = current.showValueBackdrop > 0.01;
 
     material.color.copy(current.color);
     material.emissive.copy(current.emissive);
@@ -773,6 +883,36 @@ export function initThreeBackground() {
       }
     }
     pGeo.attributes.position.needsUpdate = true;
+
+    if (valueBackdrop.visible) {
+      const vArr = valueGeo.attributes.position.array;
+      for (let i = 0; i < VALUE_NODES; i++) {
+        const ix = i * 3;
+        const seed = valueSeeds[i];
+        vArr[ix + 0] =
+          valueBasePos[ix + 0] + Math.sin(t * 0.08 + seed) * 0.6;
+        vArr[ix + 1] =
+          valueBasePos[ix + 1] + Math.cos(t * 0.07 + seed) * 0.4;
+        vArr[ix + 2] =
+          valueBasePos[ix + 2] + Math.sin(t * 0.06 + seed * 1.3) * 0.5;
+      }
+      valueGeo.attributes.position.needsUpdate = true;
+
+      const lArr = valueLineGeo.attributes.position.array;
+      let lIndex = 0;
+      for (let i = 0; i < valueConnections.length; i++) {
+        const [a, b] = valueConnections[i];
+        const ax = a * 3;
+        const bx = b * 3;
+        lArr[lIndex++] = vArr[ax + 0];
+        lArr[lIndex++] = vArr[ax + 1];
+        lArr[lIndex++] = vArr[ax + 2];
+        lArr[lIndex++] = vArr[bx + 0];
+        lArr[lIndex++] = vArr[bx + 1];
+        lArr[lIndex++] = vArr[bx + 2];
+      }
+      valueLineGeo.attributes.position.needsUpdate = true;
+    }
 
     // medical update
     medicalGroup.visible = m > 0.001;
@@ -887,6 +1027,11 @@ export function initThreeBackground() {
 
     pGeo.dispose();
     pMat.dispose();
+
+    valueGeo.dispose();
+    valueMat.dispose();
+    valueLineGeo.dispose();
+    valueLineMat.dispose();
 
     gridMesh.geometry?.dispose?.();
     material.dispose?.();

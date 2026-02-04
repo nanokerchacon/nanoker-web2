@@ -422,7 +422,7 @@ canvas {
   padding: 26px 24px 28px;
   min-height: 220px;
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateX(-18px);
   transition: transform 0.6s ease, opacity 0.6s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
@@ -434,13 +434,21 @@ canvas {
 
 .section.active .value-card {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
-.section.active .value-card:nth-child(1) { transition-delay: 0.05s; }
+.section.active .value-card:nth-child(1) { transition-delay: 0s; }
 .section.active .value-card:nth-child(2) { transition-delay: 0.1s; }
-.section.active .value-card:nth-child(3) { transition-delay: 0.15s; }
-.section.active .value-card:nth-child(4) { transition-delay: 0.2s; }
+.section.active .value-card:nth-child(3) { transition-delay: 0.2s; }
+.section.active .value-card:nth-child(4) { transition-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .value-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 
 .value-eyebrow {
   font-family: var(--font-tech);
