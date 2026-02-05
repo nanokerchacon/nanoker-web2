@@ -28,6 +28,7 @@
   <!-- Background -->
   <div class="three-layer" id="threeLayer"></div>
   <div class="screen-overlay"></div>
+  <div class="success-flash" id="successFlash" aria-hidden="true"></div>
 
   <nav class="nav" id="navbar">
     <a href="./index.html" class="nav-logo" aria-label="Nanoker Home">
@@ -56,34 +57,60 @@
           Request access to the private materials portal. We review requests manually.
         </p>
 
-        <form class="access-form" id="accessForm" autocomplete="on">
-          <div class="access-row">
-            <label class="access-field">
-              <span class="access-label">Name</span>
-              <input class="access-input" name="name" type="text" placeholder="Full name" required />
-            </label>
+        <div class="access-stage" id="accessStage">
+          <!-- FORM WRAP -->
+          <div id="accessFormWrap">
+            <form class="access-form" id="accessForm" autocomplete="on">
+              <div class="access-row">
+                <label class="access-field">
+                  <span class="access-label">Name</span>
+                  <input class="access-input" name="name" type="text" placeholder="Full name" required />
+                </label>
 
-            <label class="access-field">
-              <span class="access-label">Company</span>
-              <input class="access-input" name="company" type="text" placeholder="Company / Self-employed" required />
-            </label>
+                <label class="access-field">
+                  <span class="access-label">Company</span>
+                  <input class="access-input" name="company" type="text" placeholder="Company / Self-employed" required />
+                </label>
+              </div>
+
+              <label class="access-field">
+                <span class="access-label">Email</span>
+                <input class="access-input" name="email" type="email" placeholder="name@company.com" required />
+              </label>
+
+              <label class="access-field">
+                <span class="access-label">Request</span>
+                <textarea class="access-textarea" name="message" rows="4" placeholder="Materials / parts of interest"></textarea>
+              </label>
+
+              <button class="access-btn" id="submitBtn" type="submit">Request access</button>
+              <p class="access-note">Access requests are reviewed manually (24–48h business days).</p>
+
+              <div class="access-toast" id="toast" aria-live="polite"></div>
+            </form>
           </div>
 
-          <label class="access-field">
-            <span class="access-label">Email</span>
-            <input class="access-input" name="email" type="email" placeholder="name@company.com" required />
-          </label>
+          <!-- SUCCESS -->
+          <div class="access-success is-hidden" id="accessSuccess" aria-live="polite">
+            <div class="access-success-card">
+              <div class="access-success-top">
+                <div class="access-success-icon" aria-hidden="true">✓</div>
+                <h2 class="access-success-title">Request sent</h2>
+              </div>
 
-          <label class="access-field">
-            <span class="access-label">Request</span>
-            <textarea class="access-textarea" name="message" rows="4" placeholder="Materials / parts of interest"></textarea>
-          </label>
+              <p class="access-success-text">
+                Your request has been received and is now pending review.
+                Please keep an eye on your email (and spam folder).
+              </p>
 
-          <button class="access-btn" type="submit">Request access</button>
-          <p class="access-note">Access requests are reviewed manually (24–48h business days).</p>
+              <div class="access-actions">
+                <button class="access-btn secondary" type="button" id="sendAnotherBtn">Send another request</button>
+                <a class="access-btn" href="./index.html">Back to home</a>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <div class="access-toast" id="toast" aria-live="polite"></div>
-        </form>
       </div>
     </section>
   </main>
@@ -92,8 +119,9 @@
     import { initParticlesBackground } from "./js/three-particles.js";
 
     const threeLayer = document.getElementById("threeLayer");
+    const flash = document.getElementById("successFlash");
 
-    initParticlesBackground({
+    const particlesController = initParticlesBackground({
       mount: threeLayer,
       count: 12000,
       area: 80,
@@ -109,19 +137,131 @@
         document.documentElement.style.setProperty("--nav-h", `${navbar.offsetHeight}px`);
       };
       setNavH();
-      window.addEventListener("resize", setNavH);
+      window.addEventListener("resize", setNavH, { passive: true });
     }
 
-    // Toast demo
     const form = document.getElementById("accessForm");
+    const formWrap = document.getElementById("accessFormWrap");
+    const stage = document.getElementById("accessStage");
+    const success = document.getElementById("accessSuccess");
     const toast = document.getElementById("toast");
+    const submitBtn = document.getElementById("submitBtn");
+    const sendAnotherBtn = document.getElementById("sendAnotherBtn");
 
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      toast.textContent = "Request sent ✅ We’ll contact you shortly.";
+    const showToast = (msg) => {
+      if (!toast) return;
+      toast.textContent = msg;
       toast.classList.add("show");
-      form.reset();
-      setTimeout(() => toast.classList.remove("show"), 3200);
+      window.setTimeout(() => toast.classList.remove("show"), 3200);
+    };
+
+    const playFlash = () => {
+      if (!flash) return;
+      flash.classList.remove("play");
+      void flash.offsetWidth;
+      flash.classList.add("play");
+    };
+
+    const lockStageHeight = () => {
+      if (!stage) return;
+      stage.style.height = stage.offsetHeight + "px";
+    };
+
+    const unlockStageHeight = () => {
+      if (!stage) return;
+      stage.style.height = "";
+    };
+
+    const showSuccess = () => {
+      lockStageHeight();
+
+      // max-height animable desde la altura real
+      formWrap.style.maxHeight = formWrap.scrollHeight + "px";
+
+      requestAnimationFrame(() => {
+        formWrap.classList.add("is-hiding");
+        formWrap.style.maxHeight = "0px";
+      });
+
+      window.setTimeout(() => {
+        success.classList.remove("is-hidden");
+        success.classList.add("is-show");
+
+        playFlash();
+
+        // Burst en partículas
+        particlesController?.pulse?.();
+
+        unlockStageHeight();
+      }, 560);
+    };
+
+    const resetUI = () => {
+      lockStageHeight();
+
+      success.classList.add("is-hidden");
+      success.classList.remove("is-show");
+
+      formWrap.classList.remove("is-hiding");
+      formWrap.style.maxHeight = formWrap.scrollHeight + "px";
+
+      window.setTimeout(() => {
+        form.reset();
+        submitBtn.classList.remove("is-loading");
+        submitBtn.disabled = false;
+
+        formWrap.style.maxHeight = "";
+        unlockStageHeight();
+
+        window.dispatchEvent(new CustomEvent("partner:reset"));
+      }, 80);
+    };
+
+    sendAnotherBtn?.addEventListener("click", resetUI);
+
+    async function submitFormLikePro(formEl) {
+      const action = formEl.getAttribute("action");
+      const method = (formEl.getAttribute("method") || "POST").toUpperCase();
+
+      if (!action) {
+        await new Promise(r => setTimeout(r, 450));
+        return { ok: true, demo: true };
+      }
+
+      const formData = new FormData(formEl);
+
+      try {
+        const res = await fetch(action, { method, body: formData });
+        return { ok: res.ok };
+      } catch (e) {
+        return { ok: true, corsFallback: true };
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      submitBtn.classList.add("is-loading");
+      submitBtn.disabled = true;
+
+      if (!form.checkValidity()) {
+        submitBtn.classList.remove("is-loading");
+        submitBtn.disabled = false;
+        showToast("Please complete the required fields.");
+        return;
+      }
+
+      const result = await submitFormLikePro(form);
+
+      submitBtn.classList.remove("is-loading");
+      submitBtn.disabled = false;
+
+      if (!result.ok) {
+        showToast("Something went wrong. Please try again.");
+        return;
+      }
+
+      showSuccess();
     });
   </script>
 </body>

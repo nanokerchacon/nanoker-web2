@@ -115,14 +115,14 @@ export function initThreeBackground() {
     stencil: true,
   });
 
-  // ✅ CLAVE: transparencia real
+  // ✅ transparencia real
   renderer.setClearColor(0x000000, 0);
 
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-  // ✅ Canvas fixed + class (NO depender de canvas global)
+  // ✅ Canvas fixed + class
   const canvas = renderer.domElement;
   canvas.classList.add("three-bg-canvas");
   canvas.style.position = "fixed";
@@ -131,7 +131,6 @@ export function initThreeBackground() {
   canvas.style.height = "100%";
   canvas.style.pointerEvents = "none";
   canvas.style.display = "block";
-  // z-index lo pone el CSS (.three-bg-canvas { z-index:-1 })
   document.body.appendChild(canvas);
 
   // --- LUCES ---
@@ -304,7 +303,7 @@ export function initThreeBackground() {
   valueBackdrop.add(valueLines);
 
   // =========================================================
-  // MEDICAL GROUP + STENCIL + FX (tu código original)
+  // MEDICAL GROUP + STENCIL + FX
   // =========================================================
   const medicalGroup = new THREE.Group();
   medicalGroup.frustumCulled = false;
@@ -524,6 +523,12 @@ export function initThreeBackground() {
   const maskMesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), maskMat);
   maskScene.add(maskMesh);
 
+  let medicalCardEl = null;
+  function cacheMedicalEl() {
+    medicalCardEl = document.querySelector("#sec-medical .card") || null;
+  }
+  cacheMedicalEl();
+
   function setMaskFromElement(el) {
     if (!el) return false;
     const r = el.getBoundingClientRect();
@@ -663,6 +668,17 @@ export function initThreeBackground() {
     target = STATES[name] ?? STATES.hero;
   }
 
+  // =========================================================
+  // FUNDING HOOK (cinematic pulse)
+  // =========================================================
+  let pulse = 0;
+  const PULSE_DECAY = 5.5; // más alto = vuelve antes
+  const onFundingOpen = () => { pulse = Math.min(1, pulse + 1); };
+  const onFundingClose = () => { pulse = Math.min(1, pulse + 0.5); };
+
+  window.addEventListener("funding:open", onFundingOpen);
+  window.addEventListener("funding:close", onFundingClose);
+
   // ANTI-PETADAS
   let rafId = 0;
   let running = true;
@@ -679,6 +695,9 @@ export function initThreeBackground() {
     bloomPass.setSize(window.innerWidth, window.innerHeight);
 
     fxUniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+
+    // ✅ recache medical el (por si el DOM cambió en responsive)
+    cacheMedicalEl();
   }
 
   function resetAfterSleep() {
@@ -739,6 +758,9 @@ export function initThreeBackground() {
     if (!Number.isFinite(dt) || dt < 0) dt = 0;
     dt = Math.min(dt, 1 / 45);
 
+    // pulse decay
+    pulse *= 1 - damp(PULSE_DECAY, dt);
+
     const lerpState = damp(4.5, dt);
     const lerpMouse = damp(7.5, dt);
 
@@ -769,12 +791,16 @@ export function initThreeBackground() {
     camera.position.set(0, 25, 50);
     camera.lookAt(0, 0, 0);
 
-    bloomPass.strength = current.bloom;
-    bloomPass.radius = 0.75 + m * 0.20;
+    // ✅ cinematic pulse affects bloom + particles slightly (no rompe estética)
+    const pulseBloom = 1 + pulse * 0.45;
+    const pulseParticles = 1 + pulse * 0.28;
+
+    bloomPass.strength = current.bloom * pulseBloom;
+    bloomPass.radius = 0.75 + m * 0.20 + pulse * 0.12;
     bloomPass.threshold = 0.12 - m * 0.02;
 
     pMat.color.copy(current.emissive);
-    pMat.opacity = 0.05 + current.particles * 0.20;
+    pMat.opacity = (0.05 + current.particles * 0.20) * pulseParticles;
 
     const inMedical = m > 0.02;
     gridMesh.visible = !(current.noGrid > 0.5);
@@ -785,11 +811,12 @@ export function initThreeBackground() {
     material.roughness = current.roughness;
     material.metalness = current.metalness;
 
+    // stencil only in medical
     if (inMedical) {
       renderer.clearStencil();
       renderer.state.buffers.stencil.setTest(true);
 
-      const medicalCardEl = document.querySelector("#sec-medical .card");
+      // ✅ no querySelector en cada frame
       const hasMask = setMaskFromElement(medicalCardEl);
       if (hasMask) renderer.render(maskScene, maskCam);
       else renderer.state.buffers.stencil.setTest(false);
@@ -993,6 +1020,9 @@ export function initThreeBackground() {
     window.removeEventListener("resize", onResize);
     window.removeEventListener("mousemove", onMouseMove);
 
+    window.removeEventListener("funding:open", onFundingOpen);
+    window.removeEventListener("funding:close", onFundingClose);
+
     canvas.removeEventListener("webglcontextlost", onContextLost);
     canvas.removeEventListener("webglcontextrestored", onContextRestored);
 
@@ -1027,23 +1057,4 @@ export function initThreeBackground() {
   }
 
   return { setTargetState, dispose };
-
-  function forceResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
-
-    composer.setSize(window.innerWidth, window.innerHeight);
-    bloomPass.setSize(window.innerWidth, window.innerHeight);
-
-    fxUniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
-  }
-
-  function stopLoop() {
-    running = false;
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = 0;
-  }
 }

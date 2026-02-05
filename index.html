@@ -15,7 +15,6 @@
   <!-- Cache-buster -->
   <link rel="stylesheet" href="css/style.css?v=11" />
 
-  <!-- Importmap: OK en desktop; si Safari iOS no lo soporta, no pasa nada (menú sigue funcionando) -->
   <script type="importmap">
     {
       "imports": {
@@ -27,29 +26,26 @@
 </head>
 
 <body>
- <nav class="nav" id="navbar">
-  <a href="#" class="nav-logo" aria-label="Nanoker Home">
-    <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
-  </a>
+  <nav class="nav" id="navbar">
+    <a href="#" class="nav-logo" aria-label="Nanoker Home">
+      <img src="./img/logo-nanoker-26-hd.png" alt="Nanoker">
+    </a>
 
-  <!-- Menú (desktop centrado, móvil desplegable) -->
-  <div class="nav-center" id="nav-menu">
-    <span class="nav-label">Sectors:</span>
-    <a href="#sec-quantum" class="nav-link">Quantum</a>
-    <a href="#sec-semi" class="nav-link">Semiconductors</a>
-    <a href="#sec-extreme" class="nav-link">Defense & Space</a>
-    <a href="#sec-medical" class="nav-link">Medical</a>
-  </div>
+    <div class="nav-center" id="nav-menu">
+      <span class="nav-label">Sectors:</span>
+      <a href="#sec-quantum" class="nav-link">Quantum</a>
+      <a href="#sec-semi" class="nav-link">Semiconductors</a>
+      <a href="#sec-extreme" class="nav-link">Defense & Space</a>
+      <a href="#sec-medical" class="nav-link">Medical</a>
+    </div>
 
-  <!-- CTA (desktop derecha, móvil centrado por CSS) -->
-  <a href="./access.html" class="nav-cta">Partner Access</a>
+    <a href="./access.html" class="nav-cta">Partner Access</a>
 
-  <!-- Botón hamburguesa (móvil) -->
-  <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" type="button">
-    ☰
-    <span class="sr-only">Abrir menú</span>
-  </button>
-</nav>
+    <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" type="button">
+      ☰
+      <span class="sr-only">Abrir menú</span>
+    </button>
+  </nav>
 
   <header class="hero">
     <h1>nanoker</h1>
@@ -100,7 +96,6 @@
       </div>
     </section>
 
-    <!-- ✅ NUEVO: Servicios Médicos (a la derecha) -->
     <section class="section layout-right" id="sec-medical">
       <div class="card m-theme">
         <span class="card-tag">04 · Medical</span>
@@ -148,6 +143,377 @@
       </div>
     </section>
 
+    <!-- =========================
+         FUNDED PROJECTS / CERTIFICATIONS (PRO)
+    ========================= -->
+    <section class="section funding-pro" id="sec-funding" aria-label="Funded projects and certifications">
+      <div class="funding-pro-inner">
+
+        <header class="funding-pro-head">
+          <div class="funding-pro-kicker">Research Compliance</div>
+          <h2 class="funding-pro-title">Funded Projects & Institutional Support</h2>
+          <p class="funding-pro-subtitle">
+            A selection of funded initiatives and institutional acknowledgements supporting Nanoker’s R&amp;D.
+            Open any card to view it in full size.
+          </p>
+
+          <div class="funding-pro-actions">
+            <a class="funding-pro-cta" href="#sec-funding">View certificates</a>
+          </div>
+        </header>
+
+        <div class="funding-pro-grid" id="fundingGrid" aria-label="Certificates and project posters"></div>
+
+      </div>
+    </section>
+
+    <!-- =========================
+         PARTNERS / LOGOS (4 CATEGORIES)
+    ========================= -->
+    <section class="section partners" id="sec-partners" aria-label="Partners and collaborations">
+      <div class="partners__inner">
+
+        <header class="partners__head">
+          <div class="partners__kicker">Collaborations</div>
+          <h2 class="partners__title">Partners &amp; Companies</h2>
+          <p class="partners__subtitle">
+            Logos de empresas e instituciones que colaboran con Nanoker en proyectos, investigación, transferencia e implantación.
+          </p>
+        </header>
+
+        <div class="partners__grid">
+
+          <!-- 1) SOCIOS TECNOLÓGICOS -->
+          <article class="partners__card">
+            <h3 class="partners__cardTitle">Socios tecnológicos</h3>
+            <div class="partners__logos" aria-label="Socios tecnológicos">
+              <img src="./img/logos/socios-tecnologicos/csic.svg" alt="CSIC" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-tecnologicos/cinn.svg" alt="CINN" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-tecnologicos/fct.svg" alt="FCT" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-tecnologicos/icoa.svg" alt="ICOA" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <!-- 2) CLIENTES -->
+          <article class="partners__card">
+            <h3 class="partners__cardTitle">Clientes</h3>
+            <div class="partners__logos" aria-label="Clientes">
+              <img src="./img/logos/clientes/arcelormittal.svg" alt="ArcelorMittal" loading="lazy" decoding="async">
+              <img src="./img/logos/clientes/cheval-freres.svg" alt="Cheval Frères" loading="lazy" decoding="async">
+              <img src="./img/logos/clientes/cosentino.svg" alt="Cosentino" loading="lazy" decoding="async">
+              <img src="./img/logos/clientes/dupont.svg" alt="DuPont" loading="lazy" decoding="async">
+              <img src="./img/logos/clientes/kyocera.svg" alt="Kyocera" loading="lazy" decoding="async">
+              <img src="./img/logos/clientes/osram.svg" alt="OSRAM" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <!-- 3) SOCIOS COMERCIALES -->
+          <article class="partners__card">
+            <h3 class="partners__cardTitle">Socios comerciales</h3>
+            <div class="partners__logos" aria-label="Socios comerciales">
+              <img src="./img/logos/socios-comerciales/ahk-alemania.svg" alt="AHK Alemania" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-comerciales/astvrex.svg" alt="Astvrex" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-comerciales/kg-fridman.svg" alt="KG Fridman" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <!-- 4) SOCIOS FINANCIEROS -->
+          <article class="partners__card">
+            <h3 class="partners__cardTitle">Socios financieros</h3>
+            <div class="partners__logos" aria-label="Socios financieros">
+              <img src="./img/logos/socios-financieros/bankinter.svg" alt="Bankinter" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/caixabank.svg" alt="CaixaBank" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/cdti-gobierno.svg" alt="CDTI / Gobierno" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/european-commission.svg" alt="European Commission" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/idepa.svg" alt="IDEPA" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/mazars.svg" alt="Mazars" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/moore-stephens.svg" alt="Moore Stephens" loading="lazy" decoding="async">
+              <img src="./img/logos/socios-financieros/santander.svg" alt="Santander" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         FUNDING MODAL (PRO)
+    ========================= -->
+    <div class="funding-modal" id="fundingModal" aria-hidden="true">
+      <div class="funding-modal-backdrop" data-funding-close></div>
+
+      <div class="funding-modal-panel" role="dialog" aria-modal="true" aria-labelledby="fundingModalTitle">
+        <div class="funding-modal-top">
+          <div>
+            <div class="funding-modal-kicker">Compliance</div>
+            <div class="funding-modal-title" id="fundingModalTitle">Certificate</div>
+            <div class="funding-modal-meta" id="fundingModalMeta"></div>
+          </div>
+
+          <div class="funding-modal-controls">
+            <button class="funding-icon-btn" type="button" id="fundingPrev" aria-label="Previous (ArrowLeft)">←</button>
+            <button class="funding-icon-btn" type="button" id="fundingNext" aria-label="Next (ArrowRight)">→</button>
+            <button class="funding-icon-btn" type="button" data-funding-close aria-label="Close (Esc)">✕</button>
+          </div>
+        </div>
+
+        <div class="funding-modal-body">
+          <div class="funding-modal-media">
+            <img id="fundingModalImg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const DATA = [
+          { title: "Project LION-HD", meta: "Industrial research on strategic materials for energy-dense, cost-optimised Li-ion batteries in sustainable electromobility.", tags: ["EU", "CDTI", "FEDER"], img: "./img/certs/nanoker-lion-hd.webp" },
+          { title: "Cerámicas técnicas — Boro (B4C)", meta: "Desarrollo de cerámicas técnicas con base de nitruro de boro para procesado de metales fluidos.", tags: ["EU", "IDEPA", "iAsturias"], img: "./img/certs/desarrollo-de-ceramicas-tecnicas.webp" },
+
+          { title: "CDTI", meta: "Centro para el Desarrollo Tecnológico y la Innovación (España).", tags: ["Spain", "Innovation"], img: "./img/certs/cdti.webp", thumbMode: "logo" },
+          { title: "Ministerio de Ciencia e Innovación", meta: "Acreditación / respaldo institucional (Gobierno de España).", tags: ["Spain", "Science"], img: "./img/certs/ministerio-ciencia-innovacion.webp", thumbMode: "logo" },
+
+          { title: "Economía circular — ESCUADRAS", meta: "Transición hacia la economía circular y sostenibilidad en la industria de la defensa.", tags: ["Asturias", "Defense", "Circular"], img: "./img/certs/transicion-eco-circular.webp" }
+        ];
+
+        const grid = document.getElementById("fundingGrid");
+        const modal = document.getElementById("fundingModal");
+        const mTitle = document.getElementById("fundingModalTitle");
+        const mMeta  = document.getElementById("fundingModalMeta");
+        const mImg   = document.getElementById("fundingModalImg");
+        const btnPrev = document.getElementById("fundingPrev");
+        const btnNext = document.getElementById("fundingNext");
+
+        if (!grid || !modal || !mTitle || !mMeta || !mImg) return;
+
+        function makeTags(tags){
+          return tags.map(t => `<span class="funding-pro-tag">${t}</span>`).join("");
+        }
+
+        function cardHTML(item, i){
+          const isLogo = item.thumbMode === "logo";
+          return `
+            <button class="funding-pro-card" type="button" data-open-index="${i}">
+              <div class="funding-pro-thumb ${isLogo ? "funding-pro-thumb--logo" : ""}">
+                <img class="funding-pro-thumbImg ${isLogo ? "funding-pro-thumbImg--logo" : ""}" src="${item.img}" alt="${item.title}" loading="lazy" decoding="async">
+                <div class="funding-pro-thumbGlow"></div>
+                <div class="funding-pro-openHint">Open</div>
+              </div>
+              <div class="funding-pro-cardBody">
+                <div class="funding-pro-cardTitle">${item.title}</div>
+                <div class="funding-pro-cardMeta">${item.meta}</div>
+                <div class="funding-pro-tags">${makeTags(item.tags)}</div>
+              </div>
+            </button>
+          `;
+        }
+
+        grid.innerHTML = DATA.map(cardHTML).join("");
+
+        let index = 0;
+        let lastFocus = null;
+
+        const focusableSelector = [
+          'button:not([disabled])',
+          '[href]',
+          '[tabindex]:not([tabindex="-1"])'
+        ].join(',');
+
+        function setModal(i){
+          index = (i + DATA.length) % DATA.length;
+          const item = DATA[index];
+          mTitle.textContent = item.title;
+          mMeta.textContent = item.meta;
+          mImg.src = item.img;
+          mImg.alt = item.title;
+        }
+
+        function openModal(i){
+          lastFocus = document.activeElement;
+          setModal(i);
+
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden","false");
+          document.documentElement.style.overflow = "hidden";
+
+          window.dispatchEvent(new CustomEvent("funding:open", { detail: { index } }));
+
+          (modal.querySelector(".funding-icon-btn") || modal).focus();
+        }
+
+        function closeModal(){
+          window.dispatchEvent(new CustomEvent("funding:close", { detail: { index } }));
+
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden","true");
+          document.documentElement.style.overflow = "";
+
+          if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+        }
+
+        function next(){
+          setModal(index + 1);
+          if (modal.classList.contains("is-open")) {
+            window.dispatchEvent(new CustomEvent("funding:open", { detail: { index } }));
+          }
+        }
+        function prev(){
+          setModal(index - 1);
+          if (modal.classList.contains("is-open")) {
+            window.dispatchEvent(new CustomEvent("funding:open", { detail: { index } }));
+          }
+        }
+
+        grid.addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-open-index]");
+          if (!btn) return;
+          openModal(Number(btn.getAttribute("data-open-index") || "0"));
+        });
+
+        modal.addEventListener("click", (e) => {
+          if (e.target && e.target.matches("[data-funding-close]")) closeModal();
+        });
+
+        btnNext && btnNext.addEventListener("click", next);
+        btnPrev && btnPrev.addEventListener("click", prev);
+
+        window.addEventListener("keydown", (e) => {
+          if (!modal.classList.contains("is-open")) return;
+
+          if (e.key === "Escape") closeModal();
+          if (e.key === "ArrowRight") next();
+          if (e.key === "ArrowLeft") prev();
+
+          if (e.key === "Tab") {
+            const focusables = modal.querySelectorAll(focusableSelector);
+            if (!focusables.length) return;
+
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+              e.preventDefault(); last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+              e.preventDefault(); first.focus();
+            }
+          }
+        });
+
+        const section = document.getElementById("sec-funding");
+        if (section) {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach(ent => {
+              if (ent.isIntersecting) {
+                section.classList.add("is-inview");
+                io.disconnect();
+              }
+            });
+          }, { threshold: 0.12 });
+          io.observe(section);
+        }
+
+        /* =====================================================
+           MODAL ZOOM & PAN (PRO)
+        ====================================================== */
+
+        let scale = 1;
+        let pos = { x: 0, y: 0 };
+
+        let dragging = false;
+        let last = { x: 0, y: 0 };
+        let activePointerId = null;
+
+        const media = document.querySelector(".funding-modal-media");
+        const img = media ? media.querySelector("img") : null;
+
+        function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+        function updateTransform(){
+          if (!img) return;
+          img.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${scale})`;
+        }
+
+        function resetZoomPan(playSweep = true){
+          if (!img || !media) return;
+
+          scale = 1;
+          pos.x = 0;
+          pos.y = 0;
+          updateTransform();
+
+          dragging = false;
+          activePointerId = null;
+          media.classList.remove("is-dragging");
+
+          if (playSweep){
+            const sweep = document.createElement("div");
+            sweep.className = "funding-light-sweep play";
+            media.appendChild(sweep);
+            setTimeout(() => sweep.remove(), 1200);
+          }
+        }
+
+        if (media && img) {
+          img.draggable = false;
+          img.style.userSelect = "none";
+          img.style.webkitUserSelect = "none";
+          img.style.transformOrigin = "center center";
+
+          media.addEventListener("wheel", (e) => {
+            if (!modal.classList.contains("is-open")) return;
+            e.preventDefault();
+
+            const delta = e.deltaY > 0 ? -0.12 : 0.12;
+            scale = clamp(scale + delta, 1, 4);
+
+            if (scale === 1) { pos.x = 0; pos.y = 0; }
+            updateTransform();
+          }, { passive:false });
+
+          media.addEventListener("pointerdown", (e) => {
+            if (!modal.classList.contains("is-open")) return;
+            if (e.button != null && e.button !== 0) return;
+            if (e.target && e.target.closest("button")) return;
+
+            if (media.setPointerCapture) media.setPointerCapture(e.pointerId);
+
+            dragging = true;
+            activePointerId = e.pointerId;
+            last.x = e.clientX;
+            last.y = e.clientY;
+            media.classList.add("is-dragging");
+          });
+
+          media.addEventListener("pointermove", (e) => {
+            if (!dragging) return;
+            if (activePointerId != null && e.pointerId !== activePointerId) return;
+
+            pos.x += e.clientX - last.x;
+            pos.y += e.clientY - last.y;
+            last.x = e.clientX;
+            last.y = e.clientY;
+
+            updateTransform();
+          });
+
+          function endDrag(e){
+            if (activePointerId != null && e && e.pointerId != null && e.pointerId !== activePointerId) return;
+            dragging = false;
+            activePointerId = null;
+            media.classList.remove("is-dragging");
+          }
+
+          media.addEventListener("pointerup", endDrag);
+          media.addEventListener("pointercancel", endDrag);
+          window.addEventListener("blur", () => endDrag(null));
+
+          window.addEventListener("funding:open", () => resetZoomPan(true));
+          window.addEventListener("funding:close", () => resetZoomPan(false));
+        }
+      })();
+    </script>
+
     <div style="height: 50vh;"></div>
   </div>
 
@@ -182,10 +548,30 @@
 
       <div class="f-col">
         <h4>Certifications</h4>
-        <ul>
-          <li>ISO 9001</li>
-          <li>ISO 13485 (Medical)</li>
-          <li>ISO 14001</li>
+
+        <ul class="cert-list">
+          <li class="cert-item">
+            <a
+              class="cert-link"
+              data-cert="iso9001"
+              href="./docs/ISO-9001-EN.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ISO 9001
+            </a>
+            <span class="cert-badge">PDF</span>
+          </li>
+
+          <li class="cert-item">
+            <span class="cert-link is-disabled">ISO 13485 (Medical)</span>
+            <span class="cert-badge is-muted">Soon</span>
+          </li>
+
+          <li class="cert-item">
+            <span class="cert-link is-disabled">ISO 14001</span>
+            <span class="cert-badge is-muted">Soon</span>
+          </li>
         </ul>
       </div>
 
@@ -211,12 +597,11 @@
         <span>© 2026 Nanoker Research S.L.</span>
         <a href="#">Privacy Policy</a>
         <a href="#">Legal Notice</a>
-        <a href="#">ISO 9001</a>
+        <a href="#" data-cert="iso9001" class="footer-iso-link">ISO 9001</a>
       </div>
     </div>
   </footer>
 
-  <!-- ✅ Menú móvil: script normal (FUNCIONA EN iPhone sí o sí) -->
   <script>
     (function () {
       const nav = document.querySelector(".nav");
@@ -240,7 +625,6 @@
     })();
   </script>
 
-  <!-- ✅ Three + scroll -->
   <script type="module" src="./js/main.js?v=10"></script>
 </body>
 </html>
