@@ -1777,3 +1777,86 @@ body::before{
     padding: 7px;
   }
 }
+
+/* =========================================================
+   FIX iPhone SE / pantallas estrechas
+   - Evita overflow del H2 "Environments"
+   - Ajusta padding/tipografía sin tocar desktop
+========================================================= */
+
+/* Móvil general: un pelín más flexible */
+@media (max-width: 768px){
+  .card{
+    max-width: 560px; /* por si algún dispositivo queda raro */
+  }
+
+  .card h2{
+    /* mejor que un valor fijo: escala con el ancho */
+    font-size: clamp(2.4rem, 10vw, 3.2rem);
+    line-height: 0.95;
+  }
+
+  /* Evita que palabras largas se salgan (clave en iPhone SE) */
+  .card h2,
+  .card h2 b{
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+  }
+}
+
+/* Pantallas MUY estrechas (iPhone SE / 320px) */
+@media (max-width: 380px){
+  .section{
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .card{
+    padding: 38px 20px; /* antes 60px: en SE era demasiado */
+  }
+
+  .card-tag{
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+  }
+
+  .card p{
+    font-size: 1.02rem;
+  }
+
+  .specs{
+    gap: 18px;
+    padding-top: 22px;
+  }
+
+  .spec-item dd{
+    font-size: 1.05rem;
+  }
+}
+
+/* Extra: SOLO para el H2 del apartado Extreme (por si quieres que sea aún más estable) */
+@media (max-width: 380px){
+  #sec-extreme .card h2{
+    font-size: clamp(2.2rem, 11vw, 3.0rem);
+  }
+}
+
+/* =========================================================
+   FIX global: H2 no debe desbordar ("Environments")
+========================================================= */
+
+/* Títulos de cards: responsive y sin overflow */
+.card h2{
+  font-size: clamp(2.6rem, 6vw, 3.5rem); /* antes fijo 3.5rem */
+  line-height: 0.95;
+  max-width: 100%;
+}
+
+/* Permite wrap seguro si hay palabras largas */
+.card h2,
+.card h2 b{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
