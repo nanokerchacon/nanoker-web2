@@ -12,6 +12,9 @@
   --c-m: #35ff6a; /* Medical */
   --c-v: #8b5cf6;
 
+  /* ✅ Implantes (blanco roto) */
+  --c-i: #f5f5f2;
+
   --c-v-glow: rgba(139, 92, 246, 0.35);
   --c-v-glow-soft: rgba(139, 92, 246, 0.18);
 
@@ -19,15 +22,15 @@
 
   --nav-h: 80px;
 
-  /* Partner Access vars (antes lo tenías en otro :root) */
+  /* Partner Access vars */
   --access-bg:#05070b;
   --access-text:rgba(255,255,255,.92);
   --access-cyan:#00ffdc;
 
-  /* ✅ Partners/logo vars */
-  --partners-logo-h: 110px;         /* antes 92px -> aún más grande */
-  --partners-logo-pad: 16px;        /* más aire */
-  --partners-grid-cols: 4;          /* desktop */
+  /* Partners/logo vars */
+  --partners-logo-h: 110px;
+  --partners-logo-pad: 16px;
+  --partners-grid-cols: 4;
   --partners-tile-bg: rgba(255,255,255,.06);
   --partners-tile-border: rgba(255,255,255,.16);
 }
@@ -98,7 +101,7 @@ body::before{
     radial-gradient(800px 600px at 80% 75%, rgba(255, 0, 85, 0.07), transparent 65%);
 }
 
-/* ✅ Canvas del index (three-bg.js) */
+/* Canvas index (three-bg.js) */
 .three-bg-canvas{
   position: fixed;
   inset: 0;
@@ -109,7 +112,7 @@ body::before{
   z-index: -1;
 }
 
-/* ✅ Canvas del access (three-particles.js) */
+/* Canvas access (three-particles.js) */
 .particles-canvas{
   position: absolute;
   inset: 0;
@@ -221,6 +224,26 @@ body::before{
   box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 
+.nav-actions{
+  display:flex;
+  align-items:center;
+}
+
+.nav-lang{
+  margin-left: 12px;
+  padding: 6px 10px;
+  font-family: var(--font-tech);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1;
+}
+.nav-lang:hover{ border-color:#fff; }
+
 /* Toggle hidden desktop */
 .nav-toggle{
   display:none;
@@ -265,6 +288,14 @@ body::before{
     max-width: 52vw;
     overflow:hidden;
     text-overflow: ellipsis;
+  }
+
+  .nav-actions{
+    position:absolute;
+    right: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index:4;
   }
 
   .nav-toggle{
@@ -393,12 +424,21 @@ body::before{
   font-weight: 700;
 }
 
+/* Títulos: responsive + sin overflow */
 .card h2{
-  font-size: 3.5rem;
+  font-size: clamp(2.6rem, 6vw, 3.5rem);
   line-height: 0.95;
   margin: 0 0 30px 0;
   font-weight: 300;
   letter-spacing: -0.03em;
+  max-width: 100%;
+}
+
+.card h2,
+.card h2 b{
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .card h2 b{
@@ -436,6 +476,13 @@ body::before{
 .m-theme .card-tag, .m-theme b{
   color: var(--c-m);
   text-shadow: 0 0 20px rgba(53,255,106,0.35);
+}
+
+/* ✅ IMPLANTES */
+.i-theme{ border-left-color: var(--c-i); }
+.i-theme .card-tag, .i-theme b{
+  color: var(--c-i);
+  text-shadow: 0 0 20px rgba(245,245,242,0.25);
 }
 
 /* Specs */
@@ -1122,16 +1169,20 @@ body::before{
 }
 
 .funding-pro-card{
-  text-align:left;
+  position: relative;
+  text-align: left;
   width: 100%;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(0,0,0,.34);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-radius: 18px;
-  overflow:hidden;
+
+  /* CLAVE: no recortar contenido */
+  overflow: visible;
+
   padding: 0;
-  cursor:pointer;
+  cursor: pointer;
   transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease, background .22s ease;
   box-shadow: 0 24px 90px rgba(0,0,0,.25);
 
@@ -1139,6 +1190,7 @@ body::before{
   transform: translateY(14px);
   filter: blur(8px);
 }
+
 
 #sec-funding.is-inview .funding-pro-card{
   opacity: 1;
@@ -1253,14 +1305,13 @@ body::before{
   padding: 6px 10px;
 }
 
-/* ✅ LOGO mode (CDTI + Ministerio): pequeños, centrados, elegantes */
+/* LOGO mode */
 .funding-pro-thumb--logo{
   display: grid;
   place-items: center;
   background: rgba(255,255,255,.02);
   padding: 18px;
 }
-
 .funding-pro-thumbImg--logo{
   width: min(70%, 220px);
   height: auto;
@@ -1269,16 +1320,14 @@ body::before{
   transform: none !important;
   filter: saturate(1) contrast(1);
 }
-
 .funding-pro-card:hover .funding-pro-thumbImg--logo{
   transform: scale(1.02) !important;
 }
-
 .funding-pro-thumb--logo .funding-pro-thumbGlow{
   opacity: .35;
 }
 
-/* Responsive */
+/* Responsive funding grid */
 @media (max-width: 980px){
   .funding-pro-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
@@ -1288,60 +1337,46 @@ body::before{
 }
 
 /* =========================================================
-   FUNDING MODAL (PRO) + ZOOM/PAN
+   FUNDING MODAL + ZOOM/PAN + LIGHT SWEEP (ÚNICO)
 ========================================================= */
 
 .funding-modal{
   position: fixed;
   inset: 0;
-  display:none;
-  z-index: 5000;
+  z-index: 9999;
+  display: none;
 }
-
-.funding-modal.is-open{ display:block; }
+.funding-modal.is-open{ display: block; }
 
 .funding-modal-backdrop{
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,.72);
+  background: rgba(0,0,0,.68);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  animation: fundingFade .22s ease both;
-}
-@keyframes fundingFade{
-  from{ opacity:0; }
-  to{ opacity:1; }
 }
 
 .funding-modal-panel{
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  width: min(980px, calc(100vw - 28px));
+  transform: translate(-50%,-50%);
+  width: min(1100px, calc(100vw - 28px));
   max-height: calc(100vh - 28px);
-  overflow:hidden;
-  border-radius: 22px;
   border: 1px solid rgba(255,255,255,.16);
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 30px 160px rgba(0,0,0,.65);
-  animation: fundingIn .22s ease both;
-}
-@keyframes fundingIn{
-  from{ opacity:0; transform: translate(-50%, -48%) scale(.99); }
-  to{ opacity:1; transform: translate(-50%, -50%) scale(1); }
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(0,0,0,.72);
+  box-shadow: 0 40px 140px rgba(0,0,0,.65);
 }
 
 .funding-modal-top{
   display:flex;
   align-items:flex-start;
-  justify-content: space-between;
-  gap: 14px;
-  padding: 18px 18px 12px;
+  justify-content:space-between;
+  gap: 16px;
+  padding: 16px 16px 12px;
   border-bottom: 1px solid rgba(255,255,255,.10);
-  background: linear-gradient(to bottom, rgba(255,255,255,.04), rgba(0,0,0,0));
 }
 
 .funding-modal-kicker{
@@ -1350,42 +1385,44 @@ body::before{
   letter-spacing: .18em;
   text-transform: uppercase;
   color: rgba(255,255,255,.55);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .funding-modal-title{
-  font-size: 1.05rem;
-  font-weight: 900;
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: 18px;
+  line-height: 1.15;
 }
 
 .funding-modal-meta{
-  margin-top: 8px;
+  margin-top: 6px;
   color: rgba(255,255,255,.65);
-  line-height: 1.45;
-  max-width: 680px;
-  font-size: .95rem;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 720px;
 }
 
 .funding-modal-controls{
   display:flex;
-  gap: 8px;
+  gap: 10px;
+  flex-shrink: 0;
 }
 
 .funding-icon-btn{
-  width: 42px;
-  height: 42px;
+  height: 40px;
+  width: 40px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.06);
   color: rgba(255,255,255,.92);
-  cursor:pointer;
-  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease;
 }
 .funding-icon-btn:hover{
   transform: translateY(-1px);
-  background: rgba(255,255,255,.10);
-  border-color: rgba(0,255,255,.22);
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.22);
 }
 .funding-icon-btn:focus{ outline:none; }
 .funding-icon-btn:focus-visible{
@@ -1393,40 +1430,73 @@ body::before{
   outline-offset: 3px;
 }
 
+/* ✅ FIX “checkbox fantasma” (botón vacío colgado) */
+.funding-icon-btn:empty{
+  display:none !important;
+}
+
 .funding-modal-body{
-  padding: 16px;
+  padding: 14px;
+  max-height: calc(100vh - 140px);
+  overflow: auto;
 }
 
 .funding-modal-media{
   position: relative;
-  width:100%;
-  max-height: calc(100vh - 190px);
-  overflow: auto;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,.10);
+  width: 100%;
+  height: min(72vh, 720px);
+  border-radius: 14px;
+  overflow: hidden;
   background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.10);
   cursor: grab;
 }
 .funding-modal-media.is-dragging{ cursor: grabbing; }
 
 .funding-modal-media img{
   width: 100%;
-  height: auto;
-  display:block;
-  transform-origin: center center;
-  transition: transform .12s ease;
+  height: 100%;
+  object-fit: contain;
+  transform: translate(0px, 0px) scale(1);
   will-change: transform;
 }
 
+/* Light sweep */
+.funding-light-sweep{
+  position: absolute;
+  inset: -30%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-35%) rotate(18deg);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,.10) 35%,
+    rgba(255,255,255,.30) 50%,
+    rgba(255,255,255,.10) 65%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  filter: blur(0.5px);
+}
+
+.funding-light-sweep.play{
+  animation: fundingSweep 1.05s ease forwards;
+}
+
+@keyframes fundingSweep{
+  0%   { opacity: 0; transform: translateX(-35%) rotate(18deg); }
+  10%  { opacity: .85; }
+  100% { opacity: 0; transform: translateX(35%) rotate(18deg); }
+}
+
 @media (prefers-reduced-motion: reduce){
-  .funding-modal-backdrop,
-  .funding-modal-panel{ animation: none !important; }
+  .funding-light-sweep.play{ animation: none !important; opacity:0 !important; }
 }
 
 /* =========================
-   CERTIFICATIONS (PRO UX)
+   CERTIFICATIONS (FOOTER LIST)
 ========================= */
-
 .cert-list{
   list-style: none;
   padding: 0;
@@ -1466,9 +1536,7 @@ body::before{
   transform: translateX(4px);
 }
 
-.cert-link:hover::after{
-  width:100%;
-}
+.cert-link:hover::after{ width:100%; }
 
 .cert-badge{
   font-family: var(--font-tech);
@@ -1482,23 +1550,15 @@ body::before{
   color: rgba(255,255,255,.75);
 }
 
-.cert-badge.is-muted{
-  opacity: .45;
-}
+.cert-badge.is-muted{ opacity: .45; }
 
 .cert-link.is-disabled{
   opacity: .35;
   cursor: default;
 }
+.cert-link.is-disabled::after{ display: none; }
 
-.cert-link.is-disabled::after{
-  display: none;
-}
-
-/* =========================
-   FIX SOLO CDTI (evita recorte)
-========================= */
-
+/* CDTI recorte */
 .funding-pro-thumb img[src*="cdti.webp"]{
   object-fit: contain;
   box-sizing: border-box;
@@ -1506,14 +1566,12 @@ body::before{
   transform: none !important;
   filter: saturate(1) contrast(1);
 }
-
 .funding-pro-card:hover .funding-pro-thumb img[src*="cdti.webp"]{
   transform: none !important;
 }
 
 /* =========================================================
-   PARTNERS / LOGOS (INDEX)
-   ✅ FIX REAL: más grandes + más contrastados
+   PARTNERS / LOGOS (INDEX) — VERSION ÚNICA (WRAPPER)
 ========================================================= */
 
 .partners{
@@ -1596,12 +1654,6 @@ body::before{
   color: rgba(255,255,255,.62);
 }
 
-/* =========================================================
-   PARTNERS / LOGOS (INDEX)
-   ✅ FIX REAL: tiles + zoom al hover que funciona
-   Requiere el wrapper: <div class="partners__logo"><img ...></div>
-========================================================= */
-
 .partners__logos{
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1609,42 +1661,33 @@ body::before{
   align-items: stretch;
 }
 
-/* El tile (recuadro) */
+/* Tile */
 .partners__logo{
-  height: 150px;                       /* ✅ sube altura del recuadro */
+  height: 150px;
   border-radius: 18px;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.06);
-
   display: grid;
   place-items: center;
-
-  overflow: hidden;                     /* ✅ para que el zoom no se salga */
+  overflow: hidden;
   transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
   will-change: transform;
 }
 
-/* El logo (imagen) */
+/* Img */
 .partners__logo img{
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: center;
-
-  /* ✅ menos aire y más “relleno” */
   padding: 6px;
-
-  /* ✅ visibilidad */
   filter: grayscale(10%) brightness(1.28) contrast(1.22);
   opacity: 1;
-
-  /* ✅ zoom del logo (no de la tarjeta) */
   transform: scale(1.12);
   transition: transform .18s ease, filter .18s ease;
   will-change: transform;
 }
 
-/* Hover: zoom y punch */
 .partners__logo:hover{
   transform: translateY(-2px);
   border-color: rgba(0,255,255,.26);
@@ -1653,19 +1696,18 @@ body::before{
 }
 
 .partners__logo:hover img{
-  transform: scale(1.22);               /* ✅ zoom de verdad */
+  transform: scale(1.22);
   filter: grayscale(0%) brightness(1.35) contrast(1.28);
 }
 
-/* Para logos tipo “banner” que quieres que llenen MÁS el recuadro */
+/* Banner logos fill */
 .partners__logo.is-crop img{
-  object-fit: cover;                    /* ✅ rellena el tile */
-  padding: 0;                           /* ✅ sin márgenes */
-  transform: scale(1.06);               /* base */
+  object-fit: cover;
+  padding: 0;
+  transform: scale(1.06);
 }
-
 .partners__logo.is-crop:hover img{
-  transform: scale(1.14);               /* hover */
+  transform: scale(1.14);
 }
 
 /* Tablet */
@@ -1675,73 +1717,12 @@ body::before{
   .partners__logo:hover img{ transform: scale(1.18); }
 }
 
-/* Móvil (si quieres 4 columnas en móvil, cambia 3 por 4) */
+/* Móvil pro */
 @media (max-width: 560px){
-  .partners__logos{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 14px;
-  }
-  .partners__logo{ height: 125px; border-radius: 16px; }
-  .partners__logo img{ padding: 6px; transform: scale(1.08); }
-  .partners__logo:hover img{ transform: scale(1.16); }
-}
-
-/* =========================================================
-   PARTNERS / LOGOS (INDEX) — FIX MÓVIL PRO
-   ✅ Compatible con tu HTML: .partners__logos > img
-   ✅ Hover/zoom solo en dispositivos con ratón
-========================================================= */
-
-/* Base (desktop/tablet) - por si quieres mantenerlo bonito */
-.partners__logos{
-  display:grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
-  gap: 16px;
-  align-items: stretch;
-}
-
-.partners__logos img{
-  width:100%;
-  height: 140px;
-  object-fit: contain;
-  object-position: center;
-
-  padding: 10px;
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,.16);
-  background: rgba(255,255,255,.05);
-
-  filter: brightness(1.22) contrast(1.25);
-  opacity: 1;
-
-  transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
-  will-change: transform;
-}
-
-/* ✅ Hover SOLO si hay ratón (desktop) */
-@media (hover:hover) and (pointer:fine){
-  .partners__logos img:hover{
-    transform: scale(1.10) translateY(-2px);
-    filter: brightness(1.32) contrast(1.35);
-    border-color: rgba(0,255,255,.26);
-    background: rgba(255,255,255,.08);
-    box-shadow: 0 18px 70px rgba(0,0,0,.35);
-  }
-}
-
-/* =========================
-   MÓVIL — lo pro de verdad
-   - 2 columnas (no 3): más grande, más legible
-   - menos padding: el logo “rellena” más
-   - tiles consistentes y con buen aire
-========================= */
-@media (max-width: 560px){
-  .partners{
-    padding: 70px 18px; /* menos lateral, más pro */
-  }
+  .partners{ padding: 70px 18px; }
 
   .partners__grid{
-    grid-template-columns: 1fr; /* 1 tarjeta por fila */
+    grid-template-columns: 1fr;
     gap: 14px;
   }
 
@@ -1750,62 +1731,37 @@ body::before{
     border-radius: 16px;
   }
 
-  .partners__cardTitle{
-    margin-bottom: 10px;
-  }
-
   .partners__logos{
-    grid-template-columns: repeat(2, minmax(0, 1fr)); /* ✅ 2 cols = se ven PRO */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
 
-  .partners__logos img{
-    height: 110px;          /* grande sin petar */
-    padding: 8px;           /* menos aire para que rellene */
-    border-radius: 14px;
-    background: rgba(255,255,255,.055);
-    border-color: rgba(255,255,255,.14);
-    transform: none;        /* nada de escalas raras en móvil */
+  .partners__logo{ height: 125px; border-radius: 16px; }
+
+  .partners__logo img{
+    padding: 8px;
+    transform: none;
     filter: brightness(1.24) contrast(1.30);
   }
 }
 
 /* Móviles muy pequeños */
 @media (max-width: 360px){
-  .partners__logos img{
-    height: 100px;
-    padding: 7px;
-  }
+  .partners__logo{ height: 115px; }
 }
 
 /* =========================================================
    FIX iPhone SE / pantallas estrechas
-   - Evita overflow del H2 "Environments"
-   - Ajusta padding/tipografía sin tocar desktop
 ========================================================= */
-
-/* Móvil general: un pelín más flexible */
 @media (max-width: 768px){
-  .card{
-    max-width: 560px; /* por si algún dispositivo queda raro */
-  }
+  .card{ max-width: 560px; }
 
   .card h2{
-    /* mejor que un valor fijo: escala con el ancho */
     font-size: clamp(2.4rem, 10vw, 3.2rem);
     line-height: 0.95;
   }
-
-  /* Evita que palabras largas se salgan (clave en iPhone SE) */
-  .card h2,
-  .card h2 b{
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    hyphens: auto;
-  }
 }
 
-/* Pantallas MUY estrechas (iPhone SE / 320px) */
 @media (max-width: 380px){
   .section{
     padding-left: 16px !important;
@@ -1813,7 +1769,7 @@ body::before{
   }
 
   .card{
-    padding: 38px 20px; /* antes 60px: en SE era demasiado */
+    padding: 38px 20px;
   }
 
   .card-tag{
@@ -1821,42 +1777,130 @@ body::before{
     letter-spacing: 0.18em;
   }
 
-  .card p{
-    font-size: 1.02rem;
-  }
+  .card p{ font-size: 1.02rem; }
 
   .specs{
     gap: 18px;
     padding-top: 22px;
   }
 
-  .spec-item dd{
-    font-size: 1.05rem;
-  }
+  .spec-item dd{ font-size: 1.05rem; }
 }
 
-/* Extra: SOLO para el H2 del apartado Extreme (por si quieres que sea aún más estable) */
 @media (max-width: 380px){
   #sec-extreme .card h2{
     font-size: clamp(2.2rem, 11vw, 3.0rem);
   }
 }
 
-/* =========================================================
-   FIX global: H2 no debe desbordar ("Environments")
-========================================================= */
-
-/* Títulos de cards: responsive y sin overflow */
-.card h2{
-  font-size: clamp(2.6rem, 6vw, 3.5rem); /* antes fijo 3.5rem */
-  line-height: 0.95;
-  max-width: 100%;
+/* Quita el cuadrito de foco al saltar con #hash */
+:target,
+[id]:target,
+#sec-funding:focus,
+#sec-funding:focus-visible,
+a[id]:focus,
+a[id]:focus-visible{
+  outline: none !important;
 }
 
-/* Permite wrap seguro si hay palabras largas */
-.card h2,
-.card h2 b{
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
+/* Si existe un <a id="sec-funding"></a> vacío, lo ocultamos */
+a#sec-funding:empty{
+  display:none !important;
+}
+
+.funding-pro { align-items: flex-start; }
+#sec-funding { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+/* === FIX DEFINITIVO: funding header visible siempre === */
+#sec-funding.funding-pro{
+  align-items: flex-start !important;      /* por si no se aplicó */
+}
+
+#sec-funding.funding-pro::before{
+  z-index: 0 !important;                  /* el overlay SIEMPRE detrás */
+}
+
+#sec-funding .funding-pro-inner{
+  position: relative !important;
+  z-index: 2 !important;                  /* contenido SIEMPRE delante */
+}
+
+/* Por si el header estuviese afectado por alguna regla rara */
+#sec-funding .funding-pro-head{
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* ===== FIX FUNDING HEADER ===== */
+#sec-funding{
+  min-height: auto !important;      /* ← clave */
+  align-items: flex-start !important;
+  padding-top: 140px;
+}
+
+/* =========================================================
+   ADD-ON: Funding (Certifications + Posters)
+   SOLO afecta a #sec-funding (no toca el resto)
+========================================================= */
+
+#sec-funding .funding-pro-block{
+  margin-top: 28px;
+}
+
+#sec-funding .funding-pro-blockHead{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+#sec-funding .funding-pro-blockTitle{
+  margin: 0;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.62);
+}
+
+#sec-funding .funding-pro-blockHint{
+  margin: 0;
+  color: rgba(255,255,255,.55);
+  font-size: .95rem;
+}
+
+/* Botón “Abrir” dentro de cards (mismo look que tus CTAs) */
+#sec-funding .funding-pro-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.92);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+#sec-funding .funding-pro-btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.22);
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+}
+
+/* Meta/botones dentro del body de la card */
+#sec-funding .funding-pro-actionsRow{
+  display:flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }

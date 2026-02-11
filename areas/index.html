@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nanoker | Áreas Tecnológicas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Tu CSS global (nav, base, etc.) -->
+  <link rel="stylesheet" href="../css/style.css?v=1">
+  <!-- CSS SOLO de esta página -->
+  <link rel="stylesheet" href="../css/areas.css?v=1">
+</head>
+
+<body class="areas">
+  <!-- NAV (usa tu nav actual: si ya existe en tu style.css, esto se verá bien) -->
+  <nav class="nav" id="nav">
+    <a href="../index.html" class="nav-logo" aria-label="Nanoker Home">
+      <img src="../img/brand/logo-nanoker-26-hd.png" alt="Nanoker" />
+    </a>
+
+    <div class="nav-center" id="nav-menu">
+      <span class="nav-label">Áreas:</span>
+      <a href="#quantum" class="nav-link">Quantum</a>
+      <a href="#semi" class="nav-link">Semiconductors</a>
+      <a href="#extreme" class="nav-link">Defense &amp; Space</a>
+      <a href="#biomedical" class="nav-link">BioMedical</a>
+      <a href="#implants" class="nav-link">Implants</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="../access.html" class="nav-cta">Partner Access</a>
+      <button class="nav-lang" id="langToggle" type="button" aria-label="Language">EN</button>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+      ☰ <span class="sr-only">Open menu</span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="areas-hero" id="top">
+    <div class="areas-hero-inner">
+      <div class="kicker">NANOKER · TECHNOLOGY DIVISIONS</div>
+      <br>
+      <h1>Áreas Tecnológicas</h1>
+      <p>
+      </p>
+    </div>
+  </header>
+
+  <!-- SUBNAV STICKY -->
+  <nav class="areas-subnav" aria-label="Navegación por áreas">
+    <div class="areas-subnav-inner">
+      <a class="chip" href="#quantum" data-id="quantum" style="--accent:var(--q)"><span class="dot"></span> Quantum</a>
+      <a class="chip" href="#semi" data-id="semi" style="--accent:var(--s)"><span class="dot"></span> Semiconductor</a>
+      <a class="chip" href="#extreme" data-id="extreme" style="--accent:var(--e)"><span class="dot"></span> Defense & Space</a>
+      <a class="chip" href="#biomedical" data-id="biomedical" style="--accent:var(--m)"><span class="dot"></span> BioMedical</a>
+      <a class="chip" href="#implants" data-id="implants" style="--accent:var(--i)"><span class="dot"></span> Implants</a>
+    </div>
+  </nav>
+
+  <main class="areas-wrap">
+    <!-- QUANTUM -->
+    <section class="band" id="quantum" style="--accent:var(--q); --img:url('../img/areas/quantum.png')">
+      <div class="band-hero">
+        <div class="band-copy">
+          <div class="band-kicker">01 · RESONANCE</div>
+          <h2>Quantum</h2>
+          <div class="band-sub">Investigación en nanociencia</div>
+          <p class="band-desc">
+            Innovación en tecnologías cuánticas y dispositivos nanoestructurados orientados a instrumentación avanzada.
+          </p>
+          <div class="band-actions">
+            <a class="btn primary" href="mailto:info@nanoker.com?subject=Ficha%20Quantum">Solicitar ficha</a>
+            <button class="btn" type="button" onclick="openContact('Quantum')">Hablar con ingeniería</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="band-body">
+        <div class="grid">
+          <div class="block">
+            <h3>Qué hacemos</h3>
+            <ul>
+              <li>Microestructuras “device-ready” y control de estabilidad.</li>
+              <li>Caracterización y documentación técnica.</li>
+              <li>Iteración rápida con partners.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Aplicaciones</h3>
+            <ul>
+              <li>Metrología y sensórica avanzada.</li>
+              <li>Instrumentación científica.</li>
+              <li>Entornos industriales emergentes.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Entregables</h3>
+            <ul>
+              <li>Material + informe.</li>
+              <li>Lotes con QA/QC.</li>
+              <li>Soporte integración.</li>
+            </ul>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Stability</span><b>High</b></div>
+            <div class="kpi"><span>Defects</span><b>Low</b></div>
+            <div class="kpi"><span>QA/QC</span><b>Trace</b></div>
+            <div class="kpi"><span>R&amp;D</span><b>Yes</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEMICONDUCTOR -->
+    <section class="band" id="semi" style="--accent:var(--s); --img:url('../img/areas/semiconductor.png')">
+      <div class="band-hero">
+        <div class="band-copy">
+          <div class="band-kicker">02 · LITHOGRAPHY</div>
+          <h2>Semiconductor</h2>
+          <div class="band-sub">Tecnología para microchips</div>
+          <p class="band-desc">
+            Soluciones para fabricación, encapsulado y procesos industriales de alta exigencia y repetibilidad.
+          </p>
+          <div class="band-actions">
+            <a class="btn primary" href="mailto:info@nanoker.com?subject=Ficha%20Semiconductor">Solicitar ficha</a>
+            <button class="btn" type="button" onclick="openContact('Semiconductor')">Hablar con ingeniería</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="band-body">
+        <div class="grid">
+          <div class="block">
+            <h3>Qué hacemos</h3>
+            <ul>
+              <li>Preparación de superficies (planitud, limpieza, microdefectos).</li>
+              <li>Optimización de consistencia por lote.</li>
+              <li>Documentación y trazabilidad.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Aplicaciones</h3>
+            <ul>
+              <li>Electrónica de potencia y procesos avanzados.</li>
+              <li>Alta temperatura / alta tensión.</li>
+              <li>Encapsulado y fabricación.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Entregables</h3>
+            <ul>
+              <li>Sustratos / wafers “ready”.</li>
+              <li>Reporte QA/QC.</li>
+              <li>Soporte técnico.</li>
+            </ul>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Roughness</span><b>&lt;0.2 nm</b></div>
+            <div class="kpi"><span>Purity</span><b>5N</b></div>
+            <div class="kpi"><span>Lot</span><b>Trace</b></div>
+            <div class="kpi"><span>Use</span><b>Industry</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXTREME -->
+    <section class="band" id="extreme" style="--accent:var(--e); --img:url('../img/areas/sector-extreme2.png')">
+      <div class="band-hero">
+        <div class="band-copy">
+          <div class="band-kicker">03 · SHIELDING</div>
+          <h2>Defense &amp; Space</h2>
+          <div class="band-sub">Blindaje y protección térmica</div>
+          <p class="band-desc">
+            Materiales de alta resistencia para entornos extremos y protección radiológica / térmica.
+          </p>
+          <div class="band-actions">
+            <a class="btn primary" href="mailto:info@nanoker.com?subject=Consulta%20Defense%20Space">Evaluar viabilidad</a>
+            <button class="btn" type="button" onclick="openContact('Defense & Space')">Hablar con ingeniería</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="band-body">
+        <div class="grid">
+          <div class="block">
+            <h3>Qué hacemos</h3>
+            <ul>
+              <li>Cerámicas técnicas para impacto, abrasión y choque térmico.</li>
+              <li>Geometrías funcionales de alta tolerancia.</li>
+              <li>Validación y QA/QC por lote.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Aplicaciones</h3>
+            <ul>
+              <li>Blindaje y protección radiológica.</li>
+              <li>Aeroespacial y defensa.</li>
+              <li>Procesos industriales extremos.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Entregables</h3>
+            <ul>
+              <li>Componentes finalizados + inspección.</li>
+              <li>Certificación según requisitos.</li>
+              <li>Co-diseño con cliente.</li>
+            </ul>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Temp</span><b>1800°C</b></div>
+            <div class="kpi"><span>Wear</span><b>High</b></div>
+            <div class="kpi"><span>Density</span><b>99.9%</b></div>
+            <div class="kpi"><span>Series</span><b>Yes</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIOMEDICAL -->
+    <section class="band" id="biomedical" style="--accent:var(--m); --img:url('../img/areas/maquina-hospital.png')">
+      <div class="band-hero">
+        <div class="band-copy">
+          <div class="band-kicker">04 · BIOMEDICAL</div>
+          <h2>BioMedical</h2>
+          <div class="band-sub">Cerámica avanzada para oncología</div>
+          <p class="band-desc">
+            Desarrollo de componentes cerámicos de alta precisión para equipos de tratamiento oncológico.
+          </p>
+          <div class="band-actions">
+            <a class="btn primary" href="mailto:info@nanoker.com?subject=Ficha%20BioMedical">Solicitar ficha</a>
+            <button class="btn" type="button" onclick="openContact('BioMedical')">Hablar con ingeniería</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="band-body">
+        <div class="grid">
+          <div class="block">
+            <h3>Qué hacemos</h3>
+            <ul>
+              <li>Componentes cerámicos de alta precisión para dispositivos médicos.</li>
+              <li>Acabado superficial y control dimensional.</li>
+              <li>Series con trazabilidad.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Aplicaciones</h3>
+            <ul>
+              <li>Equipos de radioterapia.</li>
+              <li>Entornos hospitalarios críticos.</li>
+              <li>Integración industrial en sistemas médicos.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Entregables</h3>
+            <ul>
+              <li>Piezas + documentación de lote.</li>
+              <li>QA/QC.</li>
+              <li>Soporte de integración.</li>
+            </ul>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Use</span><b>Hospital</b></div>
+            <div class="kpi"><span>Precision</span><b>High</b></div>
+            <div class="kpi"><span>Material</span><b>Ceramics</b></div>
+            <div class="kpi"><span>QA/QC</span><b>Trace</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPLANTS -->
+    <section class="band" id="implants" style="--accent:var(--i); --img:url('../img/areas/implante.png')">
+      <div class="band-hero">
+        <div class="band-copy">
+          <div class="band-kicker">05 · IMPLANTS</div>
+          <h2>Implants</h2>
+          <div class="band-sub">Biocerámica para implantología dental</div>
+          <p class="band-desc">
+            Diseño y fabricación de implantes cerámicos con control de superficie y consistencia de producción.
+          </p>
+          <div class="band-actions">
+            <a class="btn primary" href="mailto:info@nanoker.com?subject=Ficha%20Implants">Ver especificaciones</a>
+            <button class="btn" type="button" onclick="openContact('Implants')">Hablar con ingeniería</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="band-body">
+        <div class="grid">
+          <div class="block">
+            <h3>Qué hacemos</h3>
+            <ul>
+              <li>Diseño para fabricación y estabilidad de integración.</li>
+              <li>Control de superficie y calidad dimensional.</li>
+              <li>Producción por lote con trazabilidad.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Aplicaciones</h3>
+            <ul>
+              <li>Implantología dental.</li>
+              <li>Componentes asociados.</li>
+              <li>Producción industrial.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>Entregables</h3>
+            <ul>
+              <li>Implantes + documentación.</li>
+              <li>Control de calidad.</li>
+              <li>Soporte a partners.</li>
+            </ul>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Material</span><b>ZrO₂</b></div>
+            <div class="kpi"><span>Precision</span><b>µm</b></div>
+            <div class="kpi"><span>QA/QC</span><b>Trace</b></div>
+            <div class="kpi"><span>Lifetime</span><b>20y+</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT STRIP -->
+    <section class="contact-strip" id="contact">
+      <div class="contact-strip-inner">
+        <h3>Contacto</h3>
+        <p>Cuéntanos aplicación, tolerancias, cantidad y entorno. Te ponemos con la persona técnica adecuada.</p>
+        <div class="contact-strip-actions">
+          <a class="btn primary" href="mailto:info@nanoker.com">info@nanoker.com</a>
+          <button class="btn" type="button" onclick="openContact('General')">Hablar con ingeniería</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Drawer contacto -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-card">
+      <div class="drawer-top">
+        <div>
+          <div class="mono">CONTACTO TÉCNICO</div>
+          <div class="drawer-title" id="drawerTitle">Área</div>
+        </div>
+        <button class="drawer-close" type="button" onclick="closeContact()">✕</button>
+      </div>
+
+      <form class="form" action="mailto:info@nanoker.com" method="post" enctype="text/plain">
+        <input name="Empresa" placeholder="Empresa" required />
+        <input name="Nombre" placeholder="Nombre" required />
+        <input name="Email" placeholder="Email" type="email" required />
+        <textarea name="Mensaje" rows="5" placeholder="Caso / requisitos (cantidad, tolerancias, entorno…)" required></textarea>
+        <div class="drawer-actions">
+          <button class="btn primary" type="submit">Enviar</button>
+          <a class="btn" href="mailto:info@nanoker.com">Email directo</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // mobile nav (para tu nav actual)
+    (function () {
+      const nav = document.querySelector(".nav");
+      const btn = document.getElementById("navToggle");
+      const links = document.querySelectorAll(".nav-center .nav-link");
+      if (!nav || !btn) return;
+
+      btn.addEventListener("click", () => {
+        const open = !nav.classList.contains("is-open");
+        nav.classList.toggle("is-open", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+
+      links.forEach((link) => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("is-open");
+          btn.setAttribute("aria-expanded", "false");
+        });
+      });
+    })();
+
+    // drawer
+    function openContact(area){
+      const d = document.getElementById('drawer');
+      const t = document.getElementById('drawerTitle');
+      if(t) t.textContent = area;
+      d.classList.add('is-open');
+      d.setAttribute('aria-hidden','false');
+    }
+    function closeContact(){
+      const d = document.getElementById('drawer');
+      d.classList.remove('is-open');
+      d.setAttribute('aria-hidden','true');
+    }
+    document.addEventListener('click', (e) => {
+      const d = document.getElementById('drawer');
+      if(!d || !d.classList.contains('is-open')) return;
+      if(e.target === d) closeContact();
+    });
+
+    // active chips
+    (function(){
+      const chips = Array.from(document.querySelectorAll('.chip'));
+      const sections = chips.map(c => document.getElementById(c.dataset.id)).filter(Boolean);
+      const setActive = (id) => chips.forEach(c => c.classList.toggle('is-active', c.dataset.id === id));
+
+      const io = new IntersectionObserver((entries)=>{
+        const visible = entries.filter(e => e.isIntersecting).sort((a,b)=> b.intersectionRatio - a.intersectionRatio)[0];
+        if(visible?.target?.id) setActive(visible.target.id);
+      }, { threshold:[0.22,0.35,0.5,0.65], rootMargin:'-18% 0px -60% 0px' });
+
+      sections.forEach(s => io.observe(s));
+      if(sections[0]) setActive(sections[0].id);
+    })();
+  </script>
+</body>
+</html>

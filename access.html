@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nanoker | Partner Access</title>
 
-    <!-- Favicons -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="./favicon-pack/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon-pack/favicon-16x16.png">
 
@@ -18,13 +18,11 @@
   <!-- Theme color -->
   <meta name="theme-color" content="#020202">
 
-
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/style.css?v=11" />
+  <link rel="stylesheet" href="css/style.css?v=12" />
 
   <script type="importmap">
     {
@@ -48,14 +46,17 @@
     </a>
 
     <div class="nav-center" id="nav-menu">
-      <span class="nav-label">Sectors:</span>
-      <a href="./index.html#sec-quantum" class="nav-link">Quantum</a>
-      <a href="./index.html#sec-semi" class="nav-link">Semiconductors</a>
-      <a href="./index.html#sec-extreme" class="nav-link">Defense & Space</a>
-      <a href="./index.html#sec-medical" class="nav-link">Medical</a>
+      <span class="nav-label" data-i18n="nav.sectors">Sectors:</span>
+      <a href="./index.html#sec-quantum" class="nav-link" data-i18n="nav.quantum">Quantum</a>
+      <a href="./index.html#sec-semi" class="nav-link" data-i18n="nav.semi">Semiconductors</a>
+      <a href="./index.html#sec-extreme" class="nav-link" data-i18n="nav.extreme">Defense & Space</a>
+      <a href="./index.html#sec-medical" class="nav-link" data-i18n="nav.medical">Medical</a>
     </div>
 
-    <a href="./access.html" class="nav-cta" aria-current="page">Partner Access</a>
+    <a href="./access.html" class="nav-cta" aria-current="page" data-i18n="nav.partner">Partner Access</a>
+
+    <!-- Language toggle -->
+    <button class="nav-lang" id="langToggle" type="button" aria-label="Language">EN</button>
   </nav>
 
   <main class="access-page">
@@ -63,9 +64,9 @@
       <div class="access-accent"></div>
 
       <div class="access-inner">
-        <div class="access-kicker">PRIVATE · PARTNER PORTAL</div>
-        <h1 class="access-title">Partner Access</h1>
-        <p class="access-subtitle">
+        <div class="access-kicker" data-i18n="access.kicker">PRIVATE · PARTNER PORTAL</div>
+        <h1 class="access-title" data-i18n="access.title">Partner Access</h1>
+        <p class="access-subtitle" data-i18n="access.subtitle">
           Request access to the private materials portal. We review requests manually.
         </p>
 
@@ -75,28 +76,28 @@
             <form class="access-form" id="accessForm" autocomplete="on">
               <div class="access-row">
                 <label class="access-field">
-                  <span class="access-label">Name</span>
-                  <input class="access-input" name="name" type="text" placeholder="Full name" required />
+                  <span class="access-label" data-i18n="access.name">Name</span>
+                  <input class="access-input" name="name" type="text" data-i18n-placeholder="access.namePh" placeholder="Full name" required />
                 </label>
 
                 <label class="access-field">
-                  <span class="access-label">Company</span>
-                  <input class="access-input" name="company" type="text" placeholder="Company / Self-employed" required />
+                  <span class="access-label" data-i18n="access.company">Company</span>
+                  <input class="access-input" name="company" type="text" data-i18n-placeholder="access.companyPh" placeholder="Company / Self-employed" required />
                 </label>
               </div>
 
               <label class="access-field">
-                <span class="access-label">Email</span>
-                <input class="access-input" name="email" type="email" placeholder="name@company.com" required />
+                <span class="access-label" data-i18n="access.email">Email</span>
+                <input class="access-input" name="email" type="email" data-i18n-placeholder="access.emailPh" placeholder="name@company.com" required />
               </label>
 
               <label class="access-field">
-                <span class="access-label">Request</span>
-                <textarea class="access-textarea" name="message" rows="4" placeholder="Materials / parts of interest"></textarea>
+                <span class="access-label" data-i18n="access.request">Request</span>
+                <textarea class="access-textarea" name="message" rows="4" data-i18n-placeholder="access.requestPh" placeholder="Materials / parts of interest"></textarea>
               </label>
 
-              <button class="access-btn" id="submitBtn" type="submit">Request access</button>
-              <p class="access-note">Access requests are reviewed manually (24–48h business days).</p>
+              <button class="access-btn" id="submitBtn" type="submit" data-i18n="access.submit">Request access</button>
+              <p class="access-note" data-i18n="access.note">Access requests are reviewed manually (24–48h business days).</p>
 
               <div class="access-toast" id="toast" aria-live="polite"></div>
             </form>
@@ -107,17 +108,17 @@
             <div class="access-success-card">
               <div class="access-success-top">
                 <div class="access-success-icon" aria-hidden="true">✓</div>
-                <h2 class="access-success-title">Request sent</h2>
+                <h2 class="access-success-title" data-i18n="access.successTitle">Request sent</h2>
               </div>
 
-              <p class="access-success-text">
+              <p class="access-success-text" data-i18n="access.successText">
                 Your request has been received and is now pending review.
                 Please keep an eye on your email (and spam folder).
               </p>
 
               <div class="access-actions">
-                <button class="access-btn secondary" type="button" id="sendAnotherBtn">Send another request</button>
-                <a class="access-btn" href="./index.html">Back to home</a>
+                <button class="access-btn secondary" type="button" id="sendAnotherBtn" data-i18n="access.sendAnother">Send another request</button>
+                <a class="access-btn" href="./index.html" data-i18n="access.backHome">Back to home</a>
               </div>
             </div>
           </div>
@@ -129,6 +130,10 @@
 
   <script type="module">
     import { initParticlesBackground } from "./js/three-particles.js";
+    import { initLanguageSwitcher, t } from "./js/lang.js";
+
+    // Language init (global)
+    initLanguageSwitcher();
 
     const threeLayer = document.getElementById("threeLayer");
     const flash = document.getElementById("successFlash");
@@ -259,7 +264,7 @@
       if (!form.checkValidity()) {
         submitBtn.classList.remove("is-loading");
         submitBtn.disabled = false;
-        showToast("Please complete the required fields.");
+        showToast(t("access.toastRequired"));
         return;
       }
 
@@ -269,7 +274,7 @@
       submitBtn.disabled = false;
 
       if (!result.ok) {
-        showToast("Something went wrong. Please try again.");
+        showToast(t("access.toastError"));
         return;
       }
 

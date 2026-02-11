@@ -1,683 +1,507 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nanoker | Advanced Deep Tech Materials</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nanoker | Advanced Deep Tech Materials</title>
 
     <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-pack/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-pack/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-pack/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-pack/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon-pack/apple-touch-icon.png" />
+    <link rel="manifest" href="./favicon-pack/site.webmanifest" />
+    <meta name="theme-color" content="#020202" />
 
-  <!-- Apple Touch Icon (iOS) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="./favicon-pack/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Web App Manifest -->
-  <link rel="manifest" href="./favicon-pack/site.webmanifest">
+    <link rel="stylesheet" href="css/style.css?v=11" />
 
-  <!-- Theme color -->
-  <meta name="theme-color" content="#020202">
-
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
-  <!-- Cache-buster -->
-  <link rel="stylesheet" href="css/style.css?v=11" />
-
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    <!-- ✅ UX extra (home): scroll suave + reveal cards + nav active -->
+    <style>
+      html {
+        scroll-behavior: smooth;
       }
-    }
-  </script>
-</head>
 
-<body>
-  <nav class="nav" id="navbar">
-    <a href="#" class="nav-logo" aria-label="Nanoker Home">
-      <img src="./img/brand/logo-nanoker-26-hd.png" alt="Nanoker">
-    </a>
+      /* Mini reveal (sobrio, pro) */
+      .card {
+        will-change: transform, opacity;
+        transform: translateY(14px);
+        opacity: 0.001;
+        transition: transform 600ms ease, opacity 600ms ease;
+      }
+      .card.is-revealed {
+        transform: translateY(0);
+        opacity: 1;
+      }
 
-    <div class="nav-center" id="nav-menu">
-      <span class="nav-label">Sectors:</span>
-      <a href="#sec-quantum" class="nav-link">Quantum</a>
-      <a href="#sec-semi" class="nav-link">Semiconductors</a>
-      <a href="#sec-extreme" class="nav-link">Defense & Space</a>
-      <a href="#sec-medical" class="nav-link">Medical</a>
-    </div>
+      /* H2 clickable sin romper estética */
+      .card-title-link {
+        color: inherit;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .card-title-link:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.35);
+        outline-offset: 6px;
+        border-radius: 10px;
+      }
 
-    <a href="./access.html" class="nav-cta">Partner Access</a>
+      /* CTA dentro de tarjeta (minimal) */
+      .card-cta {
+        margin-top: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.9);
+        opacity: 0.9;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease;
+      }
+      .card-cta:hover {
+        transform: translateY(-1px);
+        opacity: 1;
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+      .card-cta:active {
+        transform: translateY(0);
+      }
 
-    <button class="nav-toggle" aria-controls="nav-menu" aria-expanded="false" type="button">
-      ☰
-      <span class="sr-only">Abrir menú</span>
-    </button>
-  </nav>
+      /* Indicador de sección activa en menú */
+      .nav-center .nav-link.is-active {
+        position: relative;
+        opacity: 1;
+      }
+      .nav-center .nav-link.is-active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -10px;
+        height: 2px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.35);
+      }
 
-  <header class="hero">
-    <h1>nanoker</h1>
-    <p>Architecting the invisible layer of innovation.<br />European Sovereignty in Advanced Materials.</p>
-    <div class="hero-scroll">Scroll to Explore</div>
-  </header>
+      /* Reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .card {
+          transition: none;
+          transform: none;
+          opacity: 1;
+        }
+        .card-cta {
+          transition: none;
+        }
+      }
+    </style>
 
-  <div class="content-wrapper">
-    <section class="section layout-left" id="sec-quantum">
-      <div class="card q-theme">
-        <span class="card-tag">01 · Resonance</span>
-        <h2>Quantum<br /><b>Sensing.</b></h2>
-        <p>Ingeniería de defectos a escala atómica. Diamante CVD con centros Nitrógeno-Vacante (NV) que exhiben coherencia cuántica a temperatura ambiente.</p>
-        <div class="specs">
-          <div class="spec-item"><dt>Coherence</dt><dd>&gt; 1 ms</dd></div>
-          <div class="spec-item"><dt>Defects</dt><dd>&lt; 10 ppb</dd></div>
-          <div class="spec-item"><dt>Growth Rate</dt><dd>15 µm/h</dd></div>
-          <div class="spec-item"><dt>Process</dt><dd>MPCVD</dd></div>
-        </div>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- ================= NAV ================= -->
+    <nav class="nav" id="navbar">
+      <a href="./index.html" class="nav-logo" aria-label="Nanoker Home">
+        <img src="./img/brand/logo-nanoker-26-hd.png" alt="Nanoker" />
+      </a>
+
+      <div class="nav-center" id="nav-menu">
+        <span class="nav-label" data-i18n="nav.sectors">Sectors:</span>
+        <a href="#sec-quantum" class="nav-link" data-i18n="nav.quantum">Quantum</a>
+        <a href="#sec-semi" class="nav-link" data-i18n="nav.semi">Semiconductors</a>
+        <a href="#sec-extreme" class="nav-link" data-i18n="nav.extreme">Defense & Space</a>
+        <a href="#sec-medical" class="nav-link" data-i18n="nav.medical">Medical</a>
+        <a href="#sec-implantes" class="nav-link">Implants</a>
       </div>
-    </section>
 
-    <section class="section layout-right" id="sec-semi">
-      <div class="card s-theme">
-        <span class="card-tag">02 · Lithography</span>
-        <h2>Wide Bandgap<br /><b>Power.</b></h2>
-        <p>Sustratos de Carburo de Silicio (SiC) y Zafiro EPI-Ready. Superficies atómicamente planas (&lt; 0.2nm) para la próxima generación de chips de potencia.</p>
-        <div class="specs">
-          <div class="spec-item"><dt>Material</dt><dd>4H-SiC</dd></div>
-          <div class="spec-item"><dt>Purity</dt><dd>99.999%</dd></div>
-          <div class="spec-item"><dt>Roughness</dt><dd>&lt; 0.2 nm</dd></div>
-          <div class="spec-item"><dt>Focus Ring</dt><dd>Plasma Res.</dd></div>
-        </div>
+      <div class="nav-actions">
+        <a href="./access.html" class="nav-cta" data-i18n="nav.partner">Partner Access</a>
+        <button class="nav-lang" id="langToggle" type="button" aria-label="Language">EN</button>
       </div>
-    </section>
 
-    <section class="section layout-left" id="sec-extreme">
-      <div class="card e-theme">
-        <span class="card-tag">03 · Shielding</span>
-        <h2>Extreme<br /><b>Environ<wbr>ments.</b></h2>
-        <p>Cerámicas técnicas sinterizadas (SPS). Alúmina y B4C diseñados para soportar abrasión extrema, impacto balístico y reentrada atmosférica.</p>
-        <div class="specs">
-          <div class="spec-item"><dt>Temp</dt><dd>1800°C</dd></div>
-          <div class="spec-item"><dt>Thermal</dt><dd>180 W/mK</dd></div>
-          <div class="spec-item"><dt>Cert</dt><dd>ISO 13485</dd></div>
-          <div class="spec-item"><dt>Density</dt><dd>99.9%</dd></div>
-        </div>
-      </div>
-    </section>
+      <!-- Mobile toggle -->
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        ☰ <span class="sr-only" data-i18n="nav.menu">Open menu</span>
+      </button>
+    </nav>
 
-    <section class="section layout-right" id="sec-medical">
-      <div class="card m-theme">
-        <span class="card-tag">04 · Medical</span>
-        <h2>Medical<br /><b>Services.</b></h2>
-        <p>
-          Consultas, diagnóstico y seguimiento clínico con equipos avanzados y un enfoque centrado en el paciente.
-        </p>
-        <div class="specs">
-          <div class="spec-item"><dt>Wait Time</dt><dd>15 min*</dd></div>
-          <div class="spec-item"><dt>Results</dt><dd>24–48 h*</dd></div>
-          <div class="spec-item"><dt>Specialties</dt><dd>20+</dd></div>
-          <div class="spec-item"><dt>Support</dt><dd>7/7</dd></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section value-section" id="sec-value">
-      <div class="value-content">
-        <h2>Why<br /><b>Nanoker.</b></h2>
-        <p>
-          Una plataforma integrada que conecta investigación avanzada, fabricación europea y trazabilidad total para escalar materiales críticos sin comprometer calidad ni seguridad.
-        </p>
-        <div class="value-grid">
-          <article class="value-card">
-            <span class="value-eyebrow">01</span>
-            <h3>Precision Materials</h3>
-            <p>Composiciones cerámicas con control nanométrico para rendimiento estable y repetible.</p>
-          </article>
-          <article class="value-card">
-            <span class="value-eyebrow">02</span>
-            <h3>Industrial Scale</h3>
-            <p>Capacidad de escalado rápido desde prototipo hasta producción certificada.</p>
-          </article>
-          <article class="value-card">
-            <span class="value-eyebrow">03</span>
-            <h3>Trusted Quality</h3>
-            <p>QA/QC integrado y certificaciones europeas alineadas con sectores críticos.</p>
-          </article>
-          <article class="value-card">
-            <span class="value-eyebrow">04</span>
-            <h3>Strategic Resilience</h3>
-            <p>Cadena de suministro soberana con trazabilidad total y logística integrada.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- =========================
-         FUNDED PROJECTS / CERTIFICATIONS (PRO)
-    ========================= -->
-    <section class="section funding-pro" id="sec-funding" aria-label="Funded projects and certifications">
-      <div class="funding-pro-inner">
-
-        <header class="funding-pro-head">
-          <div class="funding-pro-kicker">Research Compliance</div>
-          <h2 class="funding-pro-title">Funded Projects & Institutional Support</h2>
-          <p class="funding-pro-subtitle">
-            A selection of funded initiatives and institutional acknowledgements supporting Nanoker’s R&amp;D.
-            Open any card to view it in full size.
-          </p>
-
-          <div class="funding-pro-actions">
-            <a class="funding-pro-cta" href="#sec-funding">View certificates</a>
-          </div>
-        </header>
-
-        <div class="funding-pro-grid" id="fundingGrid" aria-label="Certificates and project posters"></div>
-
-      </div>
-    </section>
-
-   <!-- =========================
-     PARTNERS / LOGOS (4 CATEGORIES)
-========================= -->
-<section class="section partners" id="sec-partners" aria-label="Partners and collaborations">
-  <div class="partners__inner">
-
-    <header class="partners__head">
-      <div class="partners__kicker">Collaborations</div>
-      <h2 class="partners__title">Partners &amp; Companies</h2>
-      <p class="partners__subtitle">
-        Logos de empresas e instituciones que colaboran con Nanoker en proyectos, investigación, transferencia e implantación.
+    <!-- ================= HERO ================= -->
+    <header class="hero">
+      <h1>nanoker</h1>
+      <p data-i18n-html="hero.tagline">
+        Architecting the invisible layer of innovation.<br />
+        European Sovereignty in Advanced Materials.
       </p>
+      <div class="hero-scroll" data-i18n="hero.scroll">Scroll to Explore</div>
     </header>
 
-    <div class="partners__grid">
+    <div class="content-wrapper">
+      <!-- ================= QUANTUM ================= -->
+      <section class="section layout-left" id="sec-quantum">
+        <div class="card q-theme">
+          <span class="card-tag">01 · Resonance</span>
 
-      <!-- 1) SOCIOS TECNOLÓGICOS -->
-      <article class="partners__card">
-        <h3 class="partners__cardTitle">Socios tecnológicos</h3>
-        <div class="partners__logos" aria-label="Socios tecnológicos">
-          <div class="partners__logo">
-            <img src="./img/logos/socios-tecnologicos/csic.svg" alt="CSIC" loading="lazy" decoding="async">
+          <!-- ✅ título clicable a /areas/#quantum -->
+          <a class="card-title-link" href="./areas/#quantum" aria-label="Go to Quantum area">
+            <h2 data-i18n-html="cards.quantum.title">Quantum<br /><b>Sensing.</b></h2>
+          </a>
+
+          <p data-i18n="cards.quantum.text">
+            Ingeniería de defectos a escala atómica. Diamante CVD con centros Nitrógeno-Vacante
+            (NV) que exhiben coherencia cuántica a temperatura ambiente.
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <dt data-i18n="cards.quantum.spec.coherence">Coherence</dt><dd>&gt; 1 ms</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.quantum.spec.defects">Defects</dt><dd>&lt; 10 ppb</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.quantum.spec.growth">Growth Rate</dt><dd>15 µm/h</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.quantum.spec.process">Process</dt><dd>MPCVD</dd>
+            </div>
           </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-tecnologicos/cinn.svg" alt="CINN" loading="lazy" decoding="async">
+
+          <!-- ✅ CTA -->
+          <a class="card-cta" href="./areas/#quantum">View details <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <!-- ================= SEMI ================= -->
+      <section class="section layout-right" id="sec-semi">
+        <div class="card s-theme">
+          <span class="card-tag">02 · Lithography</span>
+
+          <a class="card-title-link" href="./areas/#semi" aria-label="Go to Semiconductors area">
+            <h2 data-i18n-html="cards.semi.title">Wide Bandgap<br /><b>Power.</b></h2>
+          </a>
+
+          <p data-i18n="cards.semi.text">
+            Sustratos de Carburo de Silicio (SiC) y Zafiro EPI-Ready. Superficies atómicamente
+            planas (&lt; 0.2nm).
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <dt data-i18n="cards.semi.spec.material">Material</dt><dd>4H-SiC</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.semi.spec.purity">Purity</dt><dd>99.999%</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.semi.spec.roughness">Roughness</dt><dd>&lt; 0.2 nm</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.semi.spec.focus">Focus Ring</dt><dd>Plasma Res.</dd>
+            </div>
           </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-tecnologicos/fct.svg" alt="FCT" loading="lazy" decoding="async">
+
+          <a class="card-cta" href="./areas/#semi">View details <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <!-- ================= EXTREME ================= -->
+      <section class="section layout-left" id="sec-extreme">
+        <div class="card e-theme">
+          <span class="card-tag">03 · Shielding</span>
+
+          <a class="card-title-link" href="./areas/#extreme" aria-label="Go to Defense & Space area">
+            <h2 data-i18n-html="cards.extreme.title">Extreme<br /><b>Environ<wbr />ments.</b></h2>
+          </a>
+
+          <p data-i18n="cards.extreme.text">
+            Cerámicas técnicas sinterizadas (SPS). Alúmina y B4C diseñados para abrasión extrema,
+            impacto balístico y reentrada atmosférica.
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <dt data-i18n="cards.extreme.spec.temp">Temp</dt><dd>1800°C</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.extreme.spec.thermal">Thermal</dt><dd>180 W/mK</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.extreme.spec.cert">Cert</dt><dd>ISO 13485</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.extreme.spec.density">Density</dt><dd>99.9%</dd>
+            </div>
           </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-tecnologicos/icoa.svg" alt="ICOA" loading="lazy" decoding="async">
+
+          <a class="card-cta" href="./areas/#extreme">View details <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <!-- ================= MEDICAL ================= -->
+      <section class="section layout-right" id="sec-medical">
+        <div class="card m-theme">
+          <span class="card-tag">04 · Medical</span>
+
+          <a class="card-title-link" href="./areas/#medical" aria-label="Go to BioMedical area">
+            <h2 data-i18n-html="cards.medical.title">Medical<br /><b>Services.</b></h2>
+          </a>
+
+          <p data-i18n="cards.medical.text">
+            Consultas, diagnóstico y seguimiento clínico con equipos avanzados y un enfoque centrado
+            en el paciente.
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <dt data-i18n="cards.medical.spec.wait">Wait Time</dt><dd>15 min*</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.medical.spec.results">Results</dt><dd>24–48 h*</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.medical.spec.specialties">Specialties</dt><dd>20+</dd>
+            </div>
+            <div class="spec-item">
+              <dt data-i18n="cards.medical.spec.support">Support</dt><dd>7/7</dd>
+            </div>
+          </div>
+
+          <a class="card-cta" href="./areas/#medical">View details <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <!-- ================= IMPLANTES ================= -->
+      <section class="section layout-left" id="sec-implantes">
+        <div class="card i-theme">
+          <span class="card-tag">05 · Implants</span>
+
+          <a class="card-title-link" href="./areas/#implantes" aria-label="Go to Implants area">
+            <h2>Dental<br /><b>Implants.</b></h2>
+          </a>
+
+          <p>
+            Diseño, fabricación y colocación de implantes biomédicos de alta precisión con materiales
+            avanzados y biocompatibles.
+          </p>
+
+          <div class="specs">
+            <div class="spec-item">
+              <dt>Material</dt><dd>Titanio / Cerámica</dd>
+            </div>
+            <div class="spec-item">
+              <dt>Precision</dt><dd>Micron-level</dd>
+            </div>
+            <div class="spec-item">
+              <dt>Integration</dt><dd>Osseointegration+</dd>
+            </div>
+            <div class="spec-item">
+              <dt>Lifetime</dt><dd>20+ years</dd>
+            </div>
+          </div>
+
+          <a class="card-cta" href="./areas/#implantes">View details <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <!-- ================= VALUE ================= -->
+      <section class="section value-section" id="sec-value">
+        <div class="value-content">
+          <h2>Why<br /><b>Nanoker.</b></h2>
+          <p>Plataforma integrada que conecta investigación avanzada, fabricación europea y trazabilidad total.</p>
+
+          <div class="value-grid">
+            <article class="value-card">
+              <span class="value-eyebrow">01</span>
+              <h3>Precision Materials</h3>
+              <p>Control nanométrico y repetibilidad industrial.</p>
+            </article>
+            <article class="value-card">
+              <span class="value-eyebrow">02</span>
+              <h3>Industrial Scale</h3>
+              <p>Del prototipo a producción certificada.</p>
+            </article>
+            <article class="value-card">
+              <span class="value-eyebrow">03</span>
+              <h3>Trusted Quality</h3>
+              <p>QA/QC y certificaciones europeas.</p>
+            </article>
+            <article class="value-card">
+              <span class="value-eyebrow">04</span>
+              <h3>Strategic Resilience</h3>
+              <p>Soberanía industrial y trazabilidad total.</p>
+            </article>
           </div>
         </div>
-      </article>
+      </section>
 
-      <!-- 2) CLIENTES -->
-      <article class="partners__card">
-        <h3 class="partners__cardTitle">Clientes</h3>
-        <div class="partners__logos" aria-label="Clientes">
-          <div class="partners__logo">
-            <img src="./img/logos/clientes/arcelormittal.svg" alt="ArcelorMittal" loading="lazy" decoding="async">
+      <!-- ================= FOOTER ================= -->
+      <footer class="footer" id="contact">
+        <div class="footer-grid">
+          <div class="f-brand">
+            <h3>nanoker</h3>
+            <p>
+              Joint Venture ARCADIA.<br />
+              Plataforma industrial europea para la soberanía en materiales avanzados y fabricación de precisión.
+            </p>
           </div>
-          <div class="partners__logo">
-            <img src="./img/logos/clientes/cheval-freres.svg" alt="Cheval Frères" loading="lazy" decoding="async">
+
+          <div class="f-col">
+            <h4>Capabilities</h4>
+            <ul>
+              <li><a href="#sec-quantum">Quantum Sensing</a></li>
+              <li><a href="#sec-semi">Power Electronics</a></li>
+              <li><a href="#sec-extreme">Extreme Environments</a></li>
+              <li><a href="#sec-medical">Biomedical Implants</a></li>
+              <li><a href="#sec-implantes">Dental Implants</a></li>
+            </ul>
           </div>
-          <div class="partners__logo">
-            <img src="./img/logos/clientes/cosentino.svg" alt="Cosentino" loading="lazy" decoding="async">
+
+          <div class="f-col">
+            <h4>Industrial Hubs</h4>
+            <ul>
+              <li><a href="#">Asturias HQ (R&amp;D)</a></li>
+              <li><a href="#">León Fab (Production)</a></li>
+              <li><a href="#">European Logistics</a></li>
+            </ul>
           </div>
-          <div class="partners__logo">
-            <img src="./img/logos/clientes/dupont.svg" alt="DuPont" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/clientes/kyocera.svg" alt="Kyocera" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/clientes/osram.svg" alt="OSRAM" loading="lazy" decoding="async">
+
+          <div class="f-col">
+            <h4>Connect</h4>
+            <ul>
+              <li><a href="mailto:info@nanoker.com" class="contact-data">info@nanoker.com</a></li>
+              <li><a href="tel:+34985000000" class="contact-data">+34 985 000 000</a></li>
+              <li style="margin-top: 20px;">
+                <a href="#">LinkedIn ↗</a>
+              </li>
+            </ul>
           </div>
         </div>
-      </article>
 
-      <!-- 3) SOCIOS COMERCIALES -->
-      <article class="partners__card">
-        <h3 class="partners__cardTitle">Socios comerciales</h3>
-        <div class="partners__logos" aria-label="Socios comerciales">
-          <div class="partners__logo is-crop">
-            <img src="./img/logos/socios-comerciales/ahk-alemania.svg" alt="AHK Alemania" loading="lazy" decoding="async">
+        <div class="f-copy">
+          <div class="system-status">
+            <div class="status-dot"></div>
+            <span>SYSTEM STATUS: OPERATIONAL</span>
           </div>
-          <div class="partners__logo is-crop">
-            <img src="./img/logos/socios-comerciales/astvrex.svg" alt="Astvrex" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo is-crop">
-            <img src="./img/logos/socios-comerciales/kg-fridman.svg" alt="KG Fridman" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </article>
 
-      <!-- 4) SOCIOS FINANCIEROS -->
-      <article class="partners__card">
-        <h3 class="partners__cardTitle">Socios financieros</h3>
-        <div class="partners__logos" aria-label="Socios financieros">
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/bankinter.svg" alt="Bankinter" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/caixabank.svg" alt="CaixaBank" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/cdti-gobierno.svg" alt="CDTI / Gobierno" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/european-commission.svg" alt="European Commission" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/idepa.svg" alt="IDEPA" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/mazars.svg" alt="Mazars" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/moore-stephens.svg" alt="Moore Stephens" loading="lazy" decoding="async">
-          </div>
-          <div class="partners__logo">
-            <img src="./img/logos/socios-financieros/santander.svg" alt="Santander" loading="lazy" decoding="async">
-          </div>
-        </div>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-    <!-- =========================
-         FUNDING MODAL (PRO)
-    ========================= -->
-    <div class="funding-modal" id="fundingModal" aria-hidden="true">
-      <div class="funding-modal-backdrop" data-funding-close></div>
-
-      <div class="funding-modal-panel" role="dialog" aria-modal="true" aria-labelledby="fundingModalTitle">
-        <div class="funding-modal-top">
           <div>
-            <div class="funding-modal-kicker">Compliance</div>
-            <div class="funding-modal-title" id="fundingModalTitle">Certificate</div>
-            <div class="funding-modal-meta" id="fundingModalMeta"></div>
-          </div>
-
-          <div class="funding-modal-controls">
-            <button class="funding-icon-btn" type="button" id="fundingPrev" aria-label="Previous (ArrowLeft)">←</button>
-            <button class="funding-icon-btn" type="button" id="fundingNext" aria-label="Next (ArrowRight)">→</button>
-            <button class="funding-icon-btn" type="button" data-funding-close aria-label="Close (Esc)">✕</button>
+            <span>© 2026 Nanoker Research S.L.</span>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Legal Notice</a>
           </div>
         </div>
-
-        <div class="funding-modal-body">
-          <div class="funding-modal-media">
-            <img id="fundingModalImg" alt="">
-          </div>
-        </div>
-      </div>
+      </footer>
     </div>
+    <!-- /content-wrapper -->
 
+    <!-- ================= MENU MOBILE SCRIPT ================= -->
     <script>
       (function () {
-        const DATA = [
-          { title: "Project LION-HD", meta: "Industrial research on strategic materials for energy-dense, cost-optimised Li-ion batteries in sustainable electromobility.", tags: ["EU", "CDTI", "FEDER"], img: "./img/certs/nanoker-lion-hd.webp" },
-          { title: "Cerámicas técnicas — Boro (B4C)", meta: "Desarrollo de cerámicas técnicas con base de nitruro de boro para procesado de metales fluidos.", tags: ["EU", "IDEPA", "iAsturias"], img: "./img/certs/desarrollo-de-ceramicas-tecnicas.webp" },
+        const nav = document.querySelector(".nav");
+        const btn = document.querySelector(".nav-toggle");
+        const links = document.querySelectorAll(".nav-center .nav-link");
+        if (!nav || !btn) return;
 
-          { title: "CDTI", meta: "Centro para el Desarrollo Tecnológico y la Innovación (España).", tags: ["Spain", "Innovation"], img: "./img/certs/cdti.webp", thumbMode: "logo" },
-          { title: "Ministerio de Ciencia e Innovación", meta: "Acreditación / respaldo institucional (Gobierno de España).", tags: ["Spain", "Science"], img: "./img/certs/ministerio-ciencia-innovacion.webp", thumbMode: "logo" },
-
-          { title: "Economía circular — ESCUADRAS", meta: "Transición hacia la economía circular y sostenibilidad en la industria de la defensa.", tags: ["Asturias", "Defense", "Circular"], img: "./img/certs/transicion-eco-circular.webp" }
-        ];
-
-        const grid = document.getElementById("fundingGrid");
-        const modal = document.getElementById("fundingModal");
-        const mTitle = document.getElementById("fundingModalTitle");
-        const mMeta  = document.getElementById("fundingModalMeta");
-        const mImg   = document.getElementById("fundingModalImg");
-        const btnPrev = document.getElementById("fundingPrev");
-        const btnNext = document.getElementById("fundingNext");
-
-        if (!grid || !modal || !mTitle || !mMeta || !mImg) return;
-
-        function makeTags(tags){
-          return tags.map(t => `<span class="funding-pro-tag">${t}</span>`).join("");
-        }
-
-        function cardHTML(item, i){
-          const isLogo = item.thumbMode === "logo";
-          return `
-            <button class="funding-pro-card" type="button" data-open-index="${i}">
-              <div class="funding-pro-thumb ${isLogo ? "funding-pro-thumb--logo" : ""}">
-                <img class="funding-pro-thumbImg ${isLogo ? "funding-pro-thumbImg--logo" : ""}" src="${item.img}" alt="${item.title}" loading="lazy" decoding="async">
-                <div class="funding-pro-thumbGlow"></div>
-                <div class="funding-pro-openHint">Open</div>
-              </div>
-              <div class="funding-pro-cardBody">
-                <div class="funding-pro-cardTitle">${item.title}</div>
-                <div class="funding-pro-cardMeta">${item.meta}</div>
-                <div class="funding-pro-tags">${makeTags(item.tags)}</div>
-              </div>
-            </button>
-          `;
-        }
-
-        grid.innerHTML = DATA.map(cardHTML).join("");
-
-        let index = 0;
-        let lastFocus = null;
-
-        const focusableSelector = [
-          'button:not([disabled])',
-          '[href]',
-          '[tabindex]:not([tabindex="-1"])'
-        ].join(',');
-
-        function setModal(i){
-          index = (i + DATA.length) % DATA.length;
-          const item = DATA[index];
-          mTitle.textContent = item.title;
-          mMeta.textContent = item.meta;
-          mImg.src = item.img;
-          mImg.alt = item.title;
-        }
-
-        function openModal(i){
-          lastFocus = document.activeElement;
-          setModal(i);
-
-          modal.classList.add("is-open");
-          modal.setAttribute("aria-hidden","false");
-          document.documentElement.style.overflow = "hidden";
-
-          window.dispatchEvent(new CustomEvent("funding:open", { detail: { index } }));
-
-          (modal.querySelector(".funding-icon-btn") || modal).focus();
-        }
-
-        function closeModal(){
-          window.dispatchEvent(new CustomEvent("funding:close", { detail: { index } }));
-
-          modal.classList.remove("is-open");
-          modal.setAttribute("aria-hidden","true");
-          document.documentElement.style.overflow = "";
-
-          if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
-        }
-
-        function next(){
-          setModal(index + 1);
-          if (modal.classList.contains("is-open")) {
-            window.dispatchEvent(new CustomEvent("funding:open", { detail: { index } }));
-          }
-        }
-        function prev(){
-          setModal(index - 1);
-          if (modal.classList.contains("is-open")) {
-            window.dispatchEvent(new CustomEvent("funding:open", { detail: { index } }));
-          }
-        }
-
-        grid.addEventListener("click", (e) => {
-          const btn = e.target.closest("[data-open-index]");
-          if (!btn) return;
-          openModal(Number(btn.getAttribute("data-open-index") || "0"));
+        btn.addEventListener("click", () => {
+          const open = !nav.classList.contains("is-open");
+          nav.classList.toggle("is-open", open);
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
         });
 
-        modal.addEventListener("click", (e) => {
-          if (e.target && e.target.matches("[data-funding-close]")) closeModal();
+        links.forEach((link) => {
+          link.addEventListener("click", () => {
+            nav.classList.remove("is-open");
+            btn.setAttribute("aria-expanded", "false");
+          });
         });
+      })();
+    </script>
 
-        btnNext && btnNext.addEventListener("click", next);
-        btnPrev && btnPrev.addEventListener("click", prev);
+    <!-- ✅ UX: reveal cards + nav active indicator -->
+    <script>
+      (function () {
+        const reduceMotion =
+          window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-        window.addEventListener("keydown", (e) => {
-          if (!modal.classList.contains("is-open")) return;
+        // 1) Reveal cards (mini animación)
+        const cards = Array.from(document.querySelectorAll(".card"));
+        if (!reduceMotion && "IntersectionObserver" in window) {
+          const ioCards = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  e.target.classList.add("is-revealed");
+                  ioCards.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+          );
+          cards.forEach((c) => ioCards.observe(c));
+        } else {
+          cards.forEach((c) => c.classList.add("is-revealed"));
+        }
 
-          if (e.key === "Escape") closeModal();
-          if (e.key === "ArrowRight") next();
-          if (e.key === "ArrowLeft") prev();
+        // 2) Nav active indicator (sección activa)
+        const sectionIds = ["sec-quantum", "sec-semi", "sec-extreme", "sec-medical", "sec-implantes"];
+        const sections = sectionIds
+          .map((id) => document.getElementById(id))
+          .filter(Boolean);
 
-          if (e.key === "Tab") {
-            const focusables = modal.querySelectorAll(focusableSelector);
-            if (!focusables.length) return;
+        const navLinks = Array.from(document.querySelectorAll(".nav-center .nav-link"));
+        const byHash = new Map(navLinks.map((a) => [a.getAttribute("href"), a]));
 
-            const first = focusables[0];
-            const last = focusables[focusables.length - 1];
+        function setActive(hash) {
+          navLinks.forEach((a) => a.classList.remove("is-active"));
+          const link = byHash.get(hash);
+          if (link) link.classList.add("is-active");
+        }
 
-            if (e.shiftKey && document.activeElement === first) {
-              e.preventDefault(); last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-              e.preventDefault(); first.focus();
-            }
-          }
-        });
+        // Activo inicial
+        setActive("#sec-quantum");
 
-        const section = document.getElementById("sec-funding");
-        if (section) {
-          const io = new IntersectionObserver((entries) => {
-            entries.forEach(ent => {
-              if (ent.isIntersecting) {
-                section.classList.add("is-inview");
-                io.disconnect();
+        if ("IntersectionObserver" in window) {
+          const ioSections = new IntersectionObserver(
+            (entries) => {
+              // nos quedamos con la más visible
+              const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+              if (visible && visible.target && visible.target.id) {
+                setActive(`#${visible.target.id}`);
               }
-            });
-          }, { threshold: 0.12 });
-          io.observe(section);
-        }
+            },
+            { threshold: [0.2, 0.35, 0.5, 0.65], rootMargin: "-20% 0px -55% 0px" }
+          );
 
-        /* =====================================================
-           MODAL ZOOM & PAN (PRO)
-        ====================================================== */
-
-        let scale = 1;
-        let pos = { x: 0, y: 0 };
-
-        let dragging = false;
-        let last = { x: 0, y: 0 };
-        let activePointerId = null;
-
-        const media = document.querySelector(".funding-modal-media");
-        const img = media ? media.querySelector("img") : null;
-
-        function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
-
-        function updateTransform(){
-          if (!img) return;
-          img.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${scale})`;
-        }
-
-        function resetZoomPan(playSweep = true){
-          if (!img || !media) return;
-
-          scale = 1;
-          pos.x = 0;
-          pos.y = 0;
-          updateTransform();
-
-          dragging = false;
-          activePointerId = null;
-          media.classList.remove("is-dragging");
-
-          if (playSweep){
-            const sweep = document.createElement("div");
-            sweep.className = "funding-light-sweep play";
-            media.appendChild(sweep);
-            setTimeout(() => sweep.remove(), 1200);
-          }
-        }
-
-        if (media && img) {
-          img.draggable = false;
-          img.style.userSelect = "none";
-          img.style.webkitUserSelect = "none";
-          img.style.transformOrigin = "center center";
-
-          media.addEventListener("wheel", (e) => {
-            if (!modal.classList.contains("is-open")) return;
-            e.preventDefault();
-
-            const delta = e.deltaY > 0 ? -0.12 : 0.12;
-            scale = clamp(scale + delta, 1, 4);
-
-            if (scale === 1) { pos.x = 0; pos.y = 0; }
-            updateTransform();
-          }, { passive:false });
-
-          media.addEventListener("pointerdown", (e) => {
-            if (!modal.classList.contains("is-open")) return;
-            if (e.button != null && e.button !== 0) return;
-            if (e.target && e.target.closest("button")) return;
-
-            if (media.setPointerCapture) media.setPointerCapture(e.pointerId);
-
-            dragging = true;
-            activePointerId = e.pointerId;
-            last.x = e.clientX;
-            last.y = e.clientY;
-            media.classList.add("is-dragging");
-          });
-
-          media.addEventListener("pointermove", (e) => {
-            if (!dragging) return;
-            if (activePointerId != null && e.pointerId !== activePointerId) return;
-
-            pos.x += e.clientX - last.x;
-            pos.y += e.clientY - last.y;
-            last.x = e.clientX;
-            last.y = e.clientY;
-
-            updateTransform();
-          });
-
-          function endDrag(e){
-            if (activePointerId != null && e && e.pointerId != null && e.pointerId !== activePointerId) return;
-            dragging = false;
-            activePointerId = null;
-            media.classList.remove("is-dragging");
-          }
-
-          media.addEventListener("pointerup", endDrag);
-          media.addEventListener("pointercancel", endDrag);
-          window.addEventListener("blur", () => endDrag(null));
-
-          window.addEventListener("funding:open", () => resetZoomPan(true));
-          window.addEventListener("funding:close", () => resetZoomPan(false));
+          sections.forEach((s) => ioSections.observe(s));
         }
       })();
     </script>
 
-    <div style="height: 50vh;"></div>
-  </div>
-
-  <footer class="footer" id="contact">
-    <div class="footer-grid">
-      <div class="f-brand">
-        <h3>nanoker</h3>
-        <p>
-          Joint Venture ARCADIA.<br />
-          Plataforma industrial europea para la soberanía en materiales avanzados y fabricación de precisión.
-        </p>
-      </div>
-
-      <div class="f-col">
-        <h4>Capabilities</h4>
-        <ul>
-          <li><a href="#sec-quantum">Quantum Sensing</a></li>
-          <li><a href="#sec-semi">Power Electronics</a></li>
-          <li><a href="#sec-extreme">Extreme Environments</a></li>
-          <li><a href="#sec-medical">Biomedical Implants</a></li>
-        </ul>
-      </div>
-
-      <div class="f-col">
-        <h4>Industrial Hubs</h4>
-        <ul>
-          <li><a href="#">Asturias HQ (R&amp;D)</a></li>
-          <li><a href="#">León Fab (Production)</a></li>
-          <li><a href="#">European Logistics</a></li>
-        </ul>
-      </div>
-
-      <div class="f-col">
-        <h4>Certifications</h4>
-
-        <ul class="cert-list">
-          <li class="cert-item">
-            <a
-              class="cert-link"
-              data-cert="iso9001"
-              href="./docs/ISO-9001-EN.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ISO 9001
-            </a>
-            <span class="cert-badge">PDF</span>
-          </li>
-
-          <li class="cert-item">
-            <span class="cert-link is-disabled">ISO 13485 (Medical)</span>
-            <span class="cert-badge is-muted">Soon</span>
-          </li>
-
-          <li class="cert-item">
-            <span class="cert-link is-disabled">ISO 14001</span>
-            <span class="cert-badge is-muted">Soon</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="f-col">
-        <h4>Connect</h4>
-        <ul>
-          <li><a href="mailto:info@nanoker.com" class="contact-data">info@nanoker.com</a></li>
-          <li><a href="tel:+34985000000" class="contact-data">+34 985 000 000</a></li>
-          <li style="margin-top: 20px;">
-            <a href="#">LinkedIn ↗</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="f-copy">
-      <div class="system-status">
-        <div class="status-dot"></div>
-        <span>SYSTEM STATUS: OPERATIONAL</span>
-      </div>
-
-      <div>
-        <span>© 2026 Nanoker Research S.L.</span>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Legal Notice</a>
-        <a href="#" data-cert="iso9001" class="footer-iso-link">ISO 9001</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    (function () {
-      const nav = document.querySelector(".nav");
-      const btn = document.querySelector(".nav-toggle");
-      const links = document.querySelectorAll(".nav-center .nav-link");
-
-      if (!nav || !btn) return;
-
-      btn.addEventListener("click", function () {
-        const willOpen = !nav.classList.contains("is-open");
-        nav.classList.toggle("is-open", willOpen);
-        btn.setAttribute("aria-expanded", willOpen ? "true" : "false");
-      });
-
-      links.forEach(function (link) {
-        link.addEventListener("click", function () {
-          nav.classList.remove("is-open");
-          btn.setAttribute("aria-expanded", "false");
-        });
-      });
-    })();
-  </script>
-
-  <script type="module" src="./js/main.js?v=10"></script>
-</body>
+    <!-- ✅ ÚNICO JS PRINCIPAL -->
+    <script type="module" src="./js/main.js?v=10"></script>
+  </body>
 </html>
