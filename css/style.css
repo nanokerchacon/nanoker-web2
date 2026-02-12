@@ -230,7 +230,7 @@ body::before{
 }
 
 .nav-lang{
-  margin-left: 20px;
+  margin-left: 12px;
   padding: 6px 10px;
   font-family: var(--font-tech);
   font-size: 12px;
@@ -257,41 +257,63 @@ body::before{
 }
 
 /* =====================
-   NAV (MÓVIL) — CTA ENTRE LOGO Y BURGER
+   NAV (MÓVIL)
 ===================== */
 @media (max-width: 900px){
   :root{ --nav-h: 64px; }
 
   .nav{
     height: var(--nav-h);
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
+    padding: 0 16px;
     justify-content: flex-start;
-    gap: 10px;
   }
 
-  /* Logo: más grande en móvil */
   .nav-logo{
-    max-width: none;
-    overflow: visible;
-  }
-  .nav-logo img{
-    height: 100px;       
-    width: auto;
-    max-height: none;
+    max-width: 42vw;
+    overflow:hidden;
   }
 
-  /* Menú central en desplegable */
+  .nav-logo img{
+    max-width:100%;
+    height:auto;
+    max-height: 100px;
+  }
+
+  .nav-cta{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    z-index:4;
+    max-width: 52vw;
+    overflow:hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-actions{
+    position:absolute;
+    right: 56px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index:4;
+  }
+
+  .nav-toggle{
+    display:block;
+    margin-left:auto;
+    z-index:3;
+    padding: 8px;
+  }
+
   .nav-center{
-    display: none;
-    position: absolute;
-    left: 14px;
-    right: 14px;
-    top: 100%;
-    margin-top: 10px;
-    padding: 16px;
-    border-radius: 16px;
+    display:none;
+    position:absolute;
+    left:16px;
+    right:16px;
+    top:100%;
+    margin-top:10px;
+    padding:16px;
+    border-radius:16px;
     background: rgba(0,0,0,0.75);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -299,54 +321,18 @@ body::before{
   }
 
   .nav.is-open .nav-center{
-    display: flex;
+    display:flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
   }
-
-  /* Oculta "Áreas:" en móvil (opcional pero recomendado) */
-  .nav-label{ display:none; }
-
-  /* Acciones a la derecha del logo (INLINE) */
-  .nav-actions{
-    display: flex;
-    align-items: center;
-    gap: 0;
-    position: static;
-    margin-left: auto;
-  }
-
-  /* Partner Access: entre logo y burger */
-  .nav-cta{
-    position: static;
-    transform: none;
-    max-width: 46vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    padding: 8px 12px;
-    font-size: 0.70rem;
-    letter-spacing: 0.10em;
-  }
-
-  /* Idioma dentro del desplegable móvil */
-  .nav-center .nav-lang{
-    margin-left: 0;
-    margin-top: 2px;
-  }
-
-  /* Burger al extremo derecho */
-  .nav-toggle{
-    display: block;
-    margin-left: auto;   /* <-- empuja el burger al final */
-    position: static;
-    padding: 8px 10px;
-    border-radius: 12px;
-  }
 }
 
+/* Active link solo móvil */
+@media (max-width: 900px){
+  .nav-link:hover::after{ width:0%; }
+  .nav.is-open .nav-link.is-active::after{ width:100%; }
+}
 
 /* =====================
    HERO
@@ -1204,6 +1190,7 @@ body::before{
   transform: translateY(14px);
   filter: blur(8px);
 }
+
 
 #sec-funding.is-inview .funding-pro-card{
   opacity: 1;
