@@ -277,7 +277,7 @@ body::before{
     overflow: visible;
   }
   .nav-logo img{
-    height: 100px;       /* súbelo a 38-42 si quieres */
+    height: 100px;       
     width: auto;
     max-height: none;
   }
