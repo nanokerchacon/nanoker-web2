@@ -57,6 +57,9 @@
 
     <!-- Language toggle -->
     <button class="nav-lang" id="langToggle" type="button" aria-label="Language">EN</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false">
+      ☰ <span class="sr-only">Open menu</span>
+    </button>
   </nav>
 
   <main class="access-page">
@@ -127,6 +130,28 @@
       </div>
     </section>
   </main>
+
+  <script>
+  (function () {
+    const nav = document.querySelector(".nav");
+    const btn = document.getElementById("navToggle");
+    const links = document.querySelectorAll(".nav-center .nav-link");
+    if (!nav || !btn) return;
+
+    btn.addEventListener("click", () => {
+      const open = !nav.classList.contains("is-open");
+      nav.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+      });
+    });
+  })();
+  </script>
 
   <script type="module">
     import { initParticlesBackground } from "./js/three-particles.js";

@@ -334,6 +334,40 @@ body::before{
   .nav.is-open .nav-link.is-active::after{ width:100%; }
 }
 
+@media (max-width: 900px) {
+.nav { justify-content: space-between; }
+
+.nav-actions { 
+  position: static !important; 
+  transform: none !important; 
+  z-index: 4;
+}
+
+.nav-actions .nav-cta {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  max-width: 52vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-lang { display: none; }
+
+.nav-toggle { 
+  display: block; 
+  margin-left: 0 !important; 
+  z-index: 5;
+}
+
+.access-body .nav > .nav-cta { 
+  display: none; 
+}
+}
+
 /* =====================
    HERO
 ===================== */
@@ -1903,4 +1937,16 @@ a#sec-funding:empty{
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 12px;
+}
+
+@media (max-width: 380px) {
+  .nav-actions .nav-cta{
+    font-size: 0.62rem;
+    padding: 7px 10px;
+    letter-spacing: 0.06em;
+    max-width: 34vw;
+  }
+  .nav-logo{
+    max-width: 44vw;
+  }
 }
