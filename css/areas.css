@@ -480,7 +480,27 @@ body.areas{
 /* RESPONSIVE */
 @media (max-width: 980px){
   .grid{ grid-template-columns:1fr; }
+
+  .band-hero{
+    height: auto;
+    min-height: 300px;
+  }
+
+  .band-copy{
+    width: 100%;
+    padding: 20px;
+  }
+
   .band h2{ font-size:44px; }
+
+  .band-actions{
+    gap: 10px;
+  }
+
+  .band-actions .btn{
+    min-height: 44px;
+    padding: 10px 16px;
+  }
 
   .contact-pro-inner{
     grid-template-columns: 1fr;
@@ -563,5 +583,15 @@ body.areas{
   .chip{
     flex: 0 0 auto;
     white-space: nowrap;
+  }
+
+  .band-actions{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .band-actions .btn{
+    width: 100%;
+    justify-content: center;
   }
 }

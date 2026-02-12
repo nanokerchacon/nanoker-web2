@@ -230,7 +230,7 @@ body::before{
 }
 
 .nav-lang{
-  margin-left: 12px;
+  margin-left: 20px;
   padding: 6px 10px;
   font-family: var(--font-tech);
   font-size: 12px;
@@ -312,9 +312,9 @@ body::before{
   .nav-actions{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 0;
     position: static;
-    margin-left: 6px;
+    margin-left: auto;
   }
 
   /* Partner Access: entre logo y burger */
@@ -331,10 +331,10 @@ body::before{
     letter-spacing: 0.10em;
   }
 
-  /* Idioma pegado al CTA */
-  .nav-lang{
+  /* Idioma dentro del desplegable móvil */
+  .nav-center .nav-lang{
     margin-left: 0;
-    padding: 6px 10px;
+    margin-top: 2px;
   }
 
   /* Burger al extremo derecho */
