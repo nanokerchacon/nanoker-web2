@@ -503,3 +503,65 @@ body.areas{
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================================
+   MOBILE UX — nav sin amontonarse + chips en scroll
+   (solo afecta a la página /areas)
+========================================================= */
+
+@media (max-width: 900px){
+  body.areas .nav-cta{
+    display:none;
+    position: static;
+    transform: none;
+  }
+
+  body.areas .nav-actions{
+    display:none;
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+  }
+
+  body.areas .nav.is-open .nav-actions{
+    display:flex;
+    position: static;
+    transform: none;
+    width: 100%;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,.10);
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  body.areas .nav-center{ gap: 12px; }
+
+  body.areas .nav.is-open .nav-center{
+    max-height: calc(100vh - var(--nav-h) - 24px);
+    overflow: auto;
+  }
+
+  body.areas .nav.is-open .nav-link{
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+  }
+
+  .areas-subnav-inner{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding: 10px 14px;
+    scrollbar-width: none;
+  }
+  .areas-subnav-inner::-webkit-scrollbar{ height: 0; }
+  .chip{
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
